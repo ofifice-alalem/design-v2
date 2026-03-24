@@ -1,0 +1,379 @@
+/* ============================================================
+   BUTTON COMPONENT
+   ============================================================ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast),
+    color var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+/* ── Sizes ── */
+.btn-sm { padding: var(--space-1) var(--space-4); font-size: var(--text-xs); border-radius: var(--radius-md); }
+.btn-lg { padding: var(--space-4) var(--space-10); font-size: var(--text-base); border-radius: var(--radius-xl); }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ── Primary ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), color-mix(in srgb, var(--accent-primary) 70%, var(--accent-secondary)));
+  color: var(--text-inverse);
+  border-color: color-mix(in srgb, var(--accent-primary) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-primary) 35%, transparent);
+}
+.btn-primary:hover {
+  box-shadow: var(--glow-cyan), 0 4px 15px color-mix(in srgb, var(--accent-primary) 50%, transparent);
+  transform: translateY(-1px);
+}
+
+/* ── Secondary ── */
+.btn-secondary {
+  background: var(--surface-base);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.btn-secondary:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ── Danger ── */
+.btn-danger {
+  background: linear-gradient(135deg, var(--accent-danger), color-mix(in srgb, var(--accent-danger) 70%, #000));
+  color: #fff;
+  border-color: color-mix(in srgb, var(--accent-danger) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-danger) 35%, transparent);
+}
+.btn-danger:hover {
+  box-shadow: var(--glow-red);
+  transform: translateY(-1px);
+}
+
+/* ── Ghost ── */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  background: var(--surface-base);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+/* ── Success ── */
+.btn-success {
+  background: linear-gradient(135deg, var(--accent-success), color-mix(in srgb, var(--accent-success) 70%, #000));
+  color: #000;
+  border-color: color-mix(in srgb, var(--accent-success) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-success) 35%, transparent);
+}
+.btn-success:hover {
+  box-shadow: var(--glow-green);
+  transform: translateY(-1px);
+}
+
+/* ── Warning ── */
+.btn-warning {
+  background: linear-gradient(135deg, var(--accent-warning), color-mix(in srgb, var(--accent-warning) 70%, #000));
+  color: #000;
+  border-color: color-mix(in srgb, var(--accent-warning) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-warning) 35%, transparent);
+}
+.btn-warning:hover {
+  box-shadow: var(--glow-yellow);
+  transform: translateY(-1px);
+}
+
+/* ── Info (purple) ── */
+.btn-info {
+  background: linear-gradient(135deg, var(--color-purple-500), color-mix(in srgb, var(--color-purple-500) 70%, #000));
+  color: #fff;
+  border-color: color-mix(in srgb, var(--color-purple-500) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--color-purple-500) 35%, transparent);
+}
+.btn-info:hover {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-purple-500) 30%, transparent), 0 4px 20px color-mix(in srgb, var(--color-purple-500) 45%, transparent);
+  transform: translateY(-1px);
+}
+
+/* ── Neutral (blue) ── */
+.btn-neutral {
+  background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+  color: #fff;
+  border-color: color-mix(in srgb, var(--color-blue-500) 60%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--color-blue-500) 35%, transparent);
+}
+.btn-neutral:hover {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-blue-500) 30%, transparent), 0 4px 20px color-mix(in srgb, var(--color-blue-500) 45%, transparent);
+  transform: translateY(-1px);
+}
+/* ── Outline variants ── */
+.btn-outline-primary {
+  background: transparent;
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.btn-outline-primary:hover {
+  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-1px);
+}
+.btn-outline-danger {
+  background: transparent;
+  color: var(--accent-danger);
+  border-color: var(--accent-danger);
+}
+.btn-outline-danger:hover {
+  background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
+  box-shadow: var(--glow-red);
+  transform: translateY(-1px);
+}
+.btn-outline-success {
+  background: transparent;
+  color: var(--accent-success);
+  border-color: var(--accent-success);
+}
+.btn-outline-success:hover {
+  background: color-mix(in srgb, var(--accent-success) 10%, transparent);
+  box-shadow: var(--glow-green);
+  transform: translateY(-1px);
+}
+.btn-outline-warning {
+  background: transparent;
+  color: var(--accent-warning);
+  border-color: var(--accent-warning);
+}
+.btn-outline-warning:hover {
+  background: color-mix(in srgb, var(--accent-warning) 10%, transparent);
+  box-shadow: var(--glow-yellow);
+  transform: translateY(-1px);
+}
+.btn-outline-info {
+  background: transparent;
+  color: var(--color-purple-500);
+  border-color: var(--color-purple-500);
+}
+.btn-outline-info:hover {
+  background: color-mix(in srgb, var(--color-purple-500) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-purple-500) 25%, transparent);
+  transform: translateY(-1px);
+}
+.btn-outline-neutral {
+  background: transparent;
+  color: var(--color-blue-400);
+  border-color: var(--color-blue-500);
+}
+.btn-outline-neutral:hover {
+  background: color-mix(in srgb, var(--color-blue-500) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-blue-500) 25%, transparent);
+  transform: translateY(-1px);
+}
+.btn-outline-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+.btn-outline-secondary:hover {
+  background: var(--surface-base);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.btn-icon {
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  aspect-ratio: 1;
+}
+
+/* ── Tooltip ── */
+[data-tooltip] { position: relative; }
+[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border: 5px solid transparent;
+  border-top-color: var(--_tooltip-bg, rgba(30, 30, 32, 0.92));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 1000;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--_tooltip-bg, rgba(30, 30, 32, 0.92));
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  color: var(--_tooltip-color, rgba(255, 255, 255, 0.92));
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--_tooltip-border, rgba(255, 255, 255, 0.10));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 999;
+}
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* tooltip color per variant */
+.btn-primary[data-tooltip],
+.btn-outline-primary[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--accent-primary) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--accent-primary) 40%, transparent);
+  --_tooltip-color: var(--accent-primary);
+}
+.btn-danger[data-tooltip],
+.btn-outline-danger[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--accent-danger) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--accent-danger) 40%, transparent);
+  --_tooltip-color: var(--accent-danger);
+}
+.btn-success[data-tooltip],
+.btn-outline-success[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--accent-success) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--accent-success) 40%, transparent);
+  --_tooltip-color: var(--accent-success);
+}
+.btn-warning[data-tooltip],
+.btn-outline-warning[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--accent-warning) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--accent-warning) 40%, transparent);
+  --_tooltip-color: var(--accent-warning);
+}
+.btn-info[data-tooltip],
+.btn-outline-info[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--color-purple-500) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--color-purple-500) 40%, transparent);
+  --_tooltip-color: var(--color-purple-500);
+}
+.btn-neutral[data-tooltip],
+.btn-outline-neutral[data-tooltip] {
+  --_tooltip-bg: color-mix(in srgb, var(--color-blue-500) 20%, rgba(10,10,15,0.95));
+  --_tooltip-border: color-mix(in srgb, var(--color-blue-500) 40%, transparent);
+  --_tooltip-color: var(--color-blue-400);
+}
+
+/* ── Demo card layout helpers ── */
+.demo-card { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-5); }
+.demo-card__header { display: flex; align-items: center; justify-content: space-between; }
+.demo-card__label { font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--text-muted); font-family: var(--font-mono); }
+.demo-card__tag { font-size: var(--text-xs); }
+.demo-card__tag--primary { color: var(--accent-primary); }
+.demo-card__tag--danger { color: var(--accent-danger); }
+.demo-card__tag--success { color: var(--accent-success); }
+.demo-card__tag--warning { color: var(--accent-warning); }
+.demo-card__tag--info { color: var(--color-purple-500); }
+.demo-card__tag--neutral { color: var(--color-blue-400); }
+.demo-card__tag--muted { color: var(--text-muted); }
+.demo-card__tag--secondary { color: var(--text-secondary); }
+.demo-card__preview { display: flex; align-items: center; justify-content: center; padding: var(--space-6); background: var(--surface-bg); border-radius: var(--radius-lg); }
+.demo-card__preview--gap { gap: var(--space-4); }
+.demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4); }
+.demo-group-wrap { display: flex; flex-direction: column; gap: var(--space-6); }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.badge-pending {
+  background: color-mix(in srgb, var(--accent-warning) 18%, var(--surface-raised));
+  color: color-mix(in srgb, var(--accent-warning) 85%, var(--text-primary));
+  border-color: color-mix(in srgb, var(--accent-warning) 60%, transparent);
+}
+.badge-rejected {
+  background: color-mix(in srgb, var(--accent-danger) 18%, var(--surface-raised));
+  color: color-mix(in srgb, var(--accent-danger) 85%, var(--text-primary));
+  border-color: color-mix(in srgb, var(--accent-danger) 60%, transparent);
+}
+.badge-approved {
+  background: color-mix(in srgb, var(--accent-success) 18%, var(--surface-raised));
+  color: color-mix(in srgb, var(--accent-success) 85%, var(--text-primary));
+  border-color: color-mix(in srgb, var(--accent-success) 60%, transparent);
+}
+.badge-disabled {
+  background: color-mix(in srgb, var(--text-muted) 15%, var(--surface-raised));
+  color: var(--text-muted);
+  border-color: color-mix(in srgb, var(--text-muted) 35%, transparent);
+  opacity: 0.7;
+}
+.badge-loading {
+  background: color-mix(in srgb, var(--accent-primary) 18%, var(--surface-raised));
+  color: color-mix(in srgb, var(--accent-primary) 85%, var(--text-primary));
+  border-color: color-mix(in srgb, var(--accent-primary) 60%, transparent);
+}
+.badge-loading::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  animation: badge-spin 0.7s linear infinite;
+}
+@keyframes badge-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── View toggle active state ── */
+.btn-group .btn.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  color: var(--accent-primary);
+}
+
+/* ── Button group ── */
+.btn-group {
+  display: inline-flex;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+  border: 1px solid var(--border-default);
+}
+.btn-group .btn {
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid var(--border-subtle);
+}
+.btn-group .btn:first-child { border-start-start-radius: var(--radius-lg); border-end-start-radius: var(--radius-lg); }
+.btn-group .btn:last-child { border-start-end-radius: var(--radius-lg); border-end-end-radius: var(--radius-lg); border-right: none; }

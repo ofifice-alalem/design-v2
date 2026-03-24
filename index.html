@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./design-system/index.css" />
+  <style>
+    /* ── Offcanvas Nav ── */
+    .oc-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-base);
+    }
+    .oc-backdrop.is-open { opacity: 1; pointer-events: all; }
+    .oc-nav {
+      position: fixed;
+      top: 0; right: 0;
+      height: 100vh;
+      width: 17rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-sidebar);
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      border-left: 1px solid var(--border-subtle);
+      border-right: none;
+      transform: translateX(100%);
+      transition: transform var(--transition-layout);
+    }
+    .oc-nav.is-open { transform: translateX(0); }
+    .oc-nav__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+    .oc-nav__logo {
+      font-size: var(--text-lg);
+      font-weight: var(--weight-black);
+      letter-spacing: var(--tracking-wider);
+      color: var(--accent-primary);
+      text-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 60%, transparent);
+    }
+    .oc-nav__close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem; height: 2rem;
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+    .oc-nav__close:hover {
+      background: color-mix(in srgb, var(--accent-danger) 12%, transparent);
+      color: var(--accent-danger);
+    }
+    .oc-nav__body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .oc-nav__section {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: var(--space-4) var(--space-3) var(--space-2);
+    }
+    .oc-nav__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast);
+      position: relative;
+    }
+    .oc-nav__item:hover {
+      background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+      color: var(--text-primary);
+    }
+    .oc-nav__item.is-active {
+      background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+      color: var(--accent-primary);
+    }
+    .oc-nav__item.is-active::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px; height: 1.5rem;
+      border-radius: var(--radius-full) 0 0 var(--radius-full);
+      background: var(--accent-primary);
+      box-shadow: var(--glow-cyan-sm);
+    }
+    .oc-nav__badge {
+      margin-left: auto;
+      font-size: 0.6rem;
+      font-weight: var(--weight-bold);
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+      color: var(--accent-primary);
+      border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+    }
+    .oc-nav__footer {
+      padding: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+    /* ── Demo Topbar ── */
+    .demo-topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3.5rem;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .demo-topbar__left { display: flex; align-items: center; gap: var(--space-4); }
+    .demo-topbar__sep { width: 1px; height: 1.25rem; background: var(--border-subtle); }
+    .demo-topbar__page { font-size: var(--text-sm); color: var(--accent-primary); font-weight: var(--weight-medium); }
+    .menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem; height: 2.25rem;
+      border-radius: var(--radius-lg);
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    }
+    .menu-btn:hover {
+      background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+      color: var(--accent-primary);
+      border-color: var(--border-default);
+    }
+    .demo-page { padding-top: 3.5rem; }
+    .page-section { display: none; }
+    .page-section.is-active { display: block; }
+    .demo-section {
+      margin-bottom: var(--space-16);
+    }
+    .demo-section-title {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Offcanvas Backdrop -->
+  <div class="oc-backdrop" id="oc-backdrop" onclick="closeNav()"></div>
+
+  <!-- Offcanvas Nav -->
+  <nav class="oc-nav" id="oc-nav">
+    <div class="oc-nav__header">
+    <span class="oc-nav__logo">نظام التصميم</span>
+      <button class="oc-nav__close" onclick="closeNav()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="oc-nav__body">
+      <span class="oc-nav__section">الأساسيات</span>
+      <div class="oc-nav__item is-active" onclick="navigate('colors', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M2 12h20"/></svg>
+        الألوان
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('typography', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        الطباعة
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('spacing', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3H3"/><path d="M21 21H3"/><path d="M12 3v18"/></svg>
+        المسافات والمقاييس
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('effects', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        التأثيرات والظلال
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
+      <span class="oc-nav__section">المكونات</span>
+      <div class="oc-nav__item" onclick="navigate('cards', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/><path d="M7 12h6"/></svg>
+        البطاقات
+        <span class="oc-nav__badge">جديد</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('buttons', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="3"/></svg>
+        الايكون و الازرار
+        <span class="oc-nav__badge">قريباً</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('forms', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        النماذج
+        <span class="oc-nav__badge">قريباً</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('tables', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+        الجداول
+        <span class="oc-nav__badge">قريباً</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('navigation', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        التنقل
+        <span class="oc-nav__badge">قريباً</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('modals', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        النوافذ المنبثقة
+        <span class="oc-nav__badge">قريباً</span>
+      </div>
+    </div>
+    <div class="oc-nav__footer">
+      <p class="text-caption">نظام التصميم — الإصدار 1.0</p>
+    </div>
+  </nav>
+
+  <!-- Demo Topbar -->
+  <header class="demo-topbar">
+    <div class="demo-topbar__left">
+      <button class="menu-btn" onclick="openNav()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="demo-topbar__sep"></span>
+      <span class="text-body-sm font-semibold">نظام التصميم</span>
+      <span class="demo-topbar__sep"></span>
+      <span class="demo-topbar__page" id="topbar-page">الألوان</span>
+    </div>
+    <div class="flex gap-3">
+      <button class="btn btn-secondary btn-sm" onclick="setTheme('dark')">داكن</button>
+      <button class="btn btn-secondary btn-sm" onclick="setTheme('light')">فاتح</button>
+      <button class="btn btn-secondary btn-sm" onclick="setTheme('neon')">نيون</button>
+      <button class="btn btn-secondary btn-sm" onclick="setTheme('soft-glass')">زجاجي</button>
+      <button class="btn btn-secondary btn-sm" onclick="setTheme('high-contrast')">تباين عالي</button>
+    </div>
+  </header>
+
+  <div class="demo-page">
+  <!-- ══ Page: Colors ══ -->
+  <div id="page-colors" class="page-section is-active">
+  <div class="page-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <p class="text-label mb-3">نظام التصميم</p>
+      <h1 class="text-display text-glow-cyan mb-4">رموز الألوان</h1>
+      <p class="text-body-sm">جميع قيم الألوان مدفوعة بمتغيرات CSS. بدّل الثيم لترى التغيير فورياً.</p>
+    </div>
+
+    <!-- Accent Colors -->
+    <div class="demo-section">
+      <p class="demo-section-title">ألوان التمييز (دلالية)</p>
+      <div class="grid-auto-fill-sm">
+        <div class="color-swatch"><div class="color-swatch__block swatch-accent-primary"></div><div class="color-swatch__info"><div class="color-swatch__name">accent-primary</div><div class="color-swatch__value">--accent-primary</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-accent-secondary"></div><div class="color-swatch__info"><div class="color-swatch__name">accent-secondary</div><div class="color-swatch__value">--accent-secondary</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-accent-success"></div><div class="color-swatch__info"><div class="color-swatch__name">accent-success</div><div class="color-swatch__value">--accent-success</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-accent-warning"></div><div class="color-swatch__info"><div class="color-swatch__name">accent-warning</div><div class="color-swatch__value">--accent-warning</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-accent-danger"></div><div class="color-swatch__info"><div class="color-swatch__name">accent-danger</div><div class="color-swatch__value">--accent-danger</div></div></div>
+      </div>
+    </div>
+
+    <!-- Surface Colors -->
+    <div class="demo-section">
+      <p class="demo-section-title">ألوان الأسطح</p>
+      <div class="grid-auto-fill-sm">
+        <div class="color-swatch"><div class="color-swatch__block swatch-surface-bg"></div><div class="color-swatch__info"><div class="color-swatch__name">surface-bg</div><div class="color-swatch__value">--surface-bg</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-surface-base"></div><div class="color-swatch__info"><div class="color-swatch__name">surface-base</div><div class="color-swatch__value">--surface-base</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-surface-raised"></div><div class="color-swatch__info"><div class="color-swatch__name">surface-raised</div><div class="color-swatch__value">--surface-raised</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-surface-overlay"></div><div class="color-swatch__info"><div class="color-swatch__name">surface-overlay</div><div class="color-swatch__value">--surface-overlay</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-surface-sidebar"></div><div class="color-swatch__info"><div class="color-swatch__name">surface-sidebar</div><div class="color-swatch__value">--surface-sidebar</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-glass-bg"></div><div class="color-swatch__info"><div class="color-swatch__name">glass-bg</div><div class="color-swatch__value">--glass-bg</div></div></div>
+      </div>
+    </div>
+
+    <!-- Text Colors -->
+    <div class="demo-section">
+      <p class="demo-section-title">ألوان النصوص</p>
+      <div class="grid-auto-fill-sm">
+        <div class="color-swatch"><div class="color-swatch__block swatch-text-primary"></div><div class="color-swatch__info"><div class="color-swatch__name">text-primary</div><div class="color-swatch__value">--text-primary</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-text-secondary"></div><div class="color-swatch__info"><div class="color-swatch__name">text-secondary</div><div class="color-swatch__value">--text-secondary</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-text-muted"></div><div class="color-swatch__info"><div class="color-swatch__name">text-muted</div><div class="color-swatch__value">--text-muted</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-text-inverse"></div><div class="color-swatch__info"><div class="color-swatch__name">text-inverse</div><div class="color-swatch__value">--text-inverse</div></div></div>
+      </div>
+    </div>
+
+    <!-- Border Colors -->
+    <div class="demo-section">
+      <p class="demo-section-title">ألوان الحدود</p>
+      <div class="grid-auto-fill-sm">
+        <div class="color-swatch"><div class="color-swatch__block swatch-border-subtle"></div><div class="color-swatch__info"><div class="color-swatch__name">border-subtle</div><div class="color-swatch__value">--border-subtle</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-border-default"></div><div class="color-swatch__info"><div class="color-swatch__name">border-default</div><div class="color-swatch__value">--border-default</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-border-strong"></div><div class="color-swatch__info"><div class="color-swatch__name">border-strong</div><div class="color-swatch__value">--border-strong</div></div></div>
+      </div>
+    </div>
+
+    <!-- Primitive Palette -->
+    <div class="demo-section">
+      <p class="demo-section-title">لوحة الألوان الأساسية</p>
+      <div class="grid-auto-fill-sm">
+        <div class="color-swatch"><div class="color-swatch__block swatch-cyan-500"></div><div class="color-swatch__info"><div class="color-swatch__name">cyan-500</div><div class="color-swatch__value">#00f0ff</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-cyan-400"></div><div class="color-swatch__info"><div class="color-swatch__name">cyan-400</div><div class="color-swatch__value">#22d3ee</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-magenta-500"></div><div class="color-swatch__info"><div class="color-swatch__name">magenta-500</div><div class="color-swatch__value">#ff00e5</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-green-500"></div><div class="color-swatch__info"><div class="color-swatch__name">green-500</div><div class="color-swatch__value">#00ff88</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-yellow-500"></div><div class="color-swatch__info"><div class="color-swatch__name">yellow-500</div><div class="color-swatch__value">#ffcc00</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-red-500"></div><div class="color-swatch__info"><div class="color-swatch__name">red-500</div><div class="color-swatch__value">#ff3366</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-blue-500"></div><div class="color-swatch__info"><div class="color-swatch__name">blue-500</div><div class="color-swatch__value">#3b82f6</div></div></div>
+        <div class="color-swatch"><div class="color-swatch__block swatch-purple-500"></div><div class="color-swatch__info"><div class="color-swatch__name">purple-500</div><div class="color-swatch__value">#a855f7</div></div></div>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /page-colors -->
+
+  <!-- ══ Placeholder pages (filled in future phases) ══ -->
+  <div id="page-typography" class="page-section">
+    <div class="page-content">
+
+      <!-- Header -->
+      <div class="page-header">
+        <p class="text-label mb-3">الأساسيات</p>
+        <h1 class="text-display font-arabic mb-4">الطباعة</h1>
+        <p class="text-body-sm">يستخدم نظام التصميم خط <span class="text-accent font-mono">Cairo</span> كخط أساسي — خط عربي-لاتيني حديث بقابلية قراءة ممتازة عبر جميع الأوزان.</p>
+      </div>
+
+      <!-- Font Specimen -->
+      <div class="demo-section">
+        <p class="demo-section-title">عينة الخط — Cairo</p>
+        <div class="card p-8">
+          <p class="font-arabic font-black text-primary mb-4 font-specimen-display">نظام التصميم</p>
+          <p class="font-arabic text-body-lg text-secondary mb-4">أ ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي</p>
+          <p class="font-arabic text-body-lg text-secondary mb-4">٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ — 0 1 2 3 4 5 6 7 8 9</p>
+          <p class="font-arabic text-body text-muted">الجمال في البساطة، والقوة في التفاصيل. نظام التصميم يدعم اللغة العربية بشكل كامل.</p>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="demo-section">
+        <p class="demo-section-title">مقياس الأحجام</p>
+        <div class="card p-6">
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-4xl</div><div class="type-scale-meta__size">2.25rem / 36px</div></div><div class="type-scale-sample text-display">عنوان رئيسي كبير</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-3xl</div><div class="type-scale-meta__size">1.875rem / 30px</div></div><div class="type-scale-sample text-heading-1">عنوان أول</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-2xl</div><div class="type-scale-meta__size">1.5rem / 24px</div></div><div class="type-scale-sample text-heading-2">عنوان ثانٍ</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-xl</div><div class="type-scale-meta__size">1.25rem / 20px</div></div><div class="type-scale-sample text-heading-3">عنوان ثالث</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-lg</div><div class="type-scale-meta__size">1.125rem / 18px</div></div><div class="type-scale-sample text-body-lg">نص أساسي كبير</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-base</div><div class="type-scale-meta__size">1rem / 16px</div></div><div class="type-scale-sample text-body">نص أساسي — يستخدم نظام التصميم خط Cairo كخط رئيسي.</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-sm</div><div class="type-scale-meta__size">0.875rem / 14px</div></div><div class="type-scale-sample text-body-sm">نص صغير — يُستخدم للمحتوى الثانوي والأوصاف.</div></div>
+          <div class="type-scale-row"><div class="type-scale-meta"><div class="type-scale-meta__name">text-xs</div><div class="type-scale-meta__size">0.75rem / 12px</div></div><div class="type-scale-sample text-caption">تعليق — التسميات والشارات والبيانات الوصفية.</div></div>
+        </div>
+      </div>
+
+      <!-- Font Weights -->
+      <div class="demo-section">
+        <p class="demo-section-title">أوزان الخط</p>
+        <div class="grid-auto-fill-sm">
+          <div class="type-weight-card"><div class="type-weight-card__label">400 — عادي</div><div class="type-weight-card__sample font-normal">نظام التصميم</div></div>
+          <div class="type-weight-card"><div class="type-weight-card__label">500 — متوسط</div><div class="type-weight-card__sample font-medium">نظام التصميم</div></div>
+          <div class="type-weight-card"><div class="type-weight-card__label">600 — شبه عريض</div><div class="type-weight-card__sample font-semibold">نظام التصميم</div></div>
+          <div class="type-weight-card"><div class="type-weight-card__label">700 — عريض</div><div class="type-weight-card__sample font-bold">نظام التصميم</div></div>
+          <div class="type-weight-card"><div class="type-weight-card__label">900 — أسود</div><div class="type-weight-card__sample font-black">نظام التصميم</div></div>
+        </div>
+      </div>
+
+      <!-- Text Colors -->
+      <div class="demo-section">
+        <p class="demo-section-title">رموز ألوان النصوص</p>
+        <div class="grid-auto-fill-sm">
+          <div class="type-color-card"><div class="type-color-card__label">--text-primary</div><div class="type-color-card__sample text-primary">نص رئيسي</div></div>
+          <div class="type-color-card"><div class="type-color-card__label">--text-secondary</div><div class="type-color-card__sample text-secondary">نص ثانوي</div></div>
+          <div class="type-color-card"><div class="type-color-card__label">--text-muted</div><div class="type-color-card__sample text-muted">نص خافت</div></div>
+          <div class="type-color-card"><div class="type-color-card__label">--accent-primary</div><div class="type-color-card__sample text-accent">نص مميز</div></div>
+          <div class="type-color-card"><div class="type-color-card__label">--accent-success</div><div class="type-color-card__sample text-success">نص نجاح</div></div>
+          <div class="type-color-card"><div class="type-color-card__label">--accent-danger</div><div class="type-color-card__sample text-danger">نص خطر</div></div>
+        </div>
+      </div>
+
+      <!-- Glow Effects -->
+      <div class="demo-section">
+        <p class="demo-section-title">تأثيرات التوهج</p>
+        <div class="card p-8 flex-col gap-6 flex">
+          <div class="font-arabic font-black text-heading-1 text-glow-cyan">عنوان بتوهج سماوي</div>
+          <div class="font-arabic font-black text-heading-1 text-glow-magenta">عنوان بتوهج وردي</div>
+          <div class="font-arabic font-black text-heading-1 text-glow-green">عنوان بتوهج أخضر</div>
+        </div>
+      </div>
+
+      <!-- Arabic Support -->
+      <div class="demo-section">
+        <p class="demo-section-title">دعم اللغة العربية</p>
+        <div class="card p-8">
+          <p class="font-arabic font-black text-heading-1 text-primary mb-4">نظام التصميم</p>
+          <p class="font-arabic font-semibold text-heading-3 text-secondary mb-4">مرحباً بك في نظام التصميم المتكامل</p>
+          <p class="font-arabic text-body text-muted">خط Cairo يدعم اللغة العربية بشكل كامل مع جميع الأوزان من العادي حتى الأسود، مما يجعله مثالياً للتطبيقات ثنائية اللغة.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- /page-typography -->
+  <div id="page-spacing" class="page-section">
+    <div class="page-content">
+
+      <!-- Header -->
+      <div class="page-header">
+        <p class="text-label mb-3">الأساسيات</p>
+        <h1 class="text-display text-glow-cyan mb-4">المسافات والمقاييس</h1>
+        <p class="text-body-sm">جميع قيم المسافات والأحجام مبنية على رموز CSS. تغيير الرمز يؤثر على كل النظام فوراً.</p>
+      </div>
+
+      <!-- Spacing Scale -->
+      <div class="demo-section">
+        <p class="demo-section-title">مقياس المسافات</p>
+        <div class="card p-6 flex flex-col gap-4">
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-1</div><div class="text-caption font-mono text-muted">0.25rem / 4px</div></div><div class="spacing-row__bar spacing-row__bar--1"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-2</div><div class="text-caption font-mono text-muted">0.5rem / 8px</div></div><div class="spacing-row__bar spacing-row__bar--2"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-3</div><div class="text-caption font-mono text-muted">0.75rem / 12px</div></div><div class="spacing-row__bar spacing-row__bar--3"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-4</div><div class="text-caption font-mono text-muted">1rem / 16px</div></div><div class="spacing-row__bar spacing-row__bar--4"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-5</div><div class="text-caption font-mono text-muted">1.25rem / 20px</div></div><div class="spacing-row__bar spacing-row__bar--5"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-6</div><div class="text-caption font-mono text-muted">1.5rem / 24px</div></div><div class="spacing-row__bar spacing-row__bar--6"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-8</div><div class="text-caption font-mono text-muted">2rem / 32px</div></div><div class="spacing-row__bar spacing-row__bar--8"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-10</div><div class="text-caption font-mono text-muted">2.5rem / 40px</div></div><div class="spacing-row__bar spacing-row__bar--10"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-12</div><div class="text-caption font-mono text-muted">3rem / 48px</div></div><div class="spacing-row__bar spacing-row__bar--12"></div></div>
+          <div class="spacing-row"><div class="spacing-row__meta"><div class="text-caption font-mono text-accent font-bold">--space-16</div><div class="text-caption font-mono text-muted">4rem / 64px</div></div><div class="spacing-row__bar spacing-row__bar--16"></div></div>
+        </div>
+      </div>
+
+      <!-- Border Radius -->
+      <div class="demo-section">
+        <p class="demo-section-title">نصف القطر (الحواف)</p>
+        <div class="grid-auto-fill-sm">
+          <div class="card radius-card"><div class="radius-card__box rounded-sm"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-sm</div><div class="text-caption font-mono text-muted">0.375rem / 6px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box rounded-md"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-md</div><div class="text-caption font-mono text-muted">0.5rem / 8px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box rounded-lg"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-lg</div><div class="text-caption font-mono text-muted">0.75rem / 12px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box rounded-xl"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-xl</div><div class="text-caption font-mono text-muted">1rem / 16px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box rounded-2xl"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-2xl</div><div class="text-caption font-mono text-muted">1.25rem / 20px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box" style="border-radius: var(--radius-3xl);"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-3xl</div><div class="text-caption font-mono text-muted">3.125rem / 50px</div></div></div>
+          <div class="card radius-card"><div class="radius-card__box rounded-full"></div><div class="radius-card__info"><div class="text-caption font-mono text-accent font-bold">--radius-full</div><div class="text-caption font-mono text-muted">9999px</div></div></div>
+        </div>
+      </div>
+
+      <!-- Layout Tokens -->
+      <div class="demo-section">
+        <p class="demo-section-title">رموز التخطيط</p>
+        <div class="flex flex-col gap-3">
+          <div class="card p-5 token-row"><div><div class="text-caption font-mono text-accent font-bold">--sidebar-width</div><div class="text-caption text-muted">عرض الشريط الجانبي الكامل</div></div><div class="text-body-sm font-semibold font-mono">16rem / 256px</div></div>
+          <div class="card p-5 token-row"><div><div class="text-caption font-mono text-accent font-bold">--sidebar-width-collapsed</div><div class="text-caption text-muted">عرض الشريط الجانبي المطوي</div></div><div class="text-body-sm font-semibold font-mono">5rem / 80px</div></div>
+          <div class="card p-5 token-row"><div><div class="text-caption font-mono text-accent font-bold">--topbar-height</div><div class="text-caption text-muted">ارتفاع الشريط العلوي</div></div><div class="text-body-sm font-semibold font-mono">3.5rem / 56px</div></div>
+          <div class="card p-5 token-row"><div><div class="text-caption font-mono text-accent font-bold">--content-max-width</div><div class="text-caption text-muted">أقصى عرض لمنطقة المحتوى</div></div><div class="text-body-sm font-semibold font-mono">90rem / 1440px</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <!-- /page-spacing -->
+  <div id="page-effects" class="page-section">
+    <div class="fx-page">
+
+      <!-- Header -->
+      <div class="fx-page-header">
+        <p class="text-label mb-3">الأساسيات</p>
+        <h1 class="text-display text-glow-magenta mb-4">التأثيرات والظلال</h1>
+        <p class="text-body-sm">مجموعة تأثيرات بصرية جاهزة — ظلال، توهج، زجاج، وأنيميشن — كلها مبنية على رموز CSS.</p>
+      </div>
+
+      <!-- Shadows -->
+      <div class="demo-section">
+        <p class="demo-section-title">الظلال</p>
+        <div class="fx-grid-shadows">
+
+          <div class="fx-shadow-card">
+            <div class="fx-shadow-box fx-shadow-box--sm"></div>
+            <div class="fx-shadow-meta">
+              <div class="fx-shadow-name">--shadow-sm</div>
+              <div class="fx-shadow-label">خفيف</div>
+            </div>
+          </div>
+
+          <div class="fx-shadow-card">
+            <div class="fx-shadow-box fx-shadow-box--md"></div>
+            <div class="fx-shadow-meta">
+              <div class="fx-shadow-name">--shadow-md</div>
+              <div class="fx-shadow-label">متوسط</div>
+            </div>
+          </div>
+
+          <div class="fx-shadow-card">
+            <div class="fx-shadow-box fx-shadow-box--lg"></div>
+            <div class="fx-shadow-meta">
+              <div class="fx-shadow-name">--shadow-lg</div>
+              <div class="fx-shadow-label">كبير</div>
+            </div>
+          </div>
+
+          <div class="fx-shadow-card">
+            <div class="fx-shadow-box fx-shadow-box--xl"></div>
+            <div class="fx-shadow-meta">
+              <div class="fx-shadow-name">--shadow-xl</div>
+              <div class="fx-shadow-label">ضخم</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Glow Borders -->
+      <div class="demo-section">
+        <p class="demo-section-title">توهج الحدود — مرّر الفأرة</p>
+        <div class="fx-grid-glow">
+
+          <div class="card glow-border fx-glow-card">
+            <div class="fx-glow-name fx-glow-name--cyan">glow-border</div>
+            <div class="fx-glow-label">سماوي — الافتراضي</div>
+          </div>
+
+          <div class="card glow-border glow-border-magenta fx-glow-card">
+            <div class="fx-glow-name fx-glow-name--magenta">glow-border-magenta</div>
+            <div class="fx-glow-label">وردي</div>
+          </div>
+
+          <div class="card glow-border glow-border-green fx-glow-card">
+            <div class="fx-glow-name fx-glow-name--green">glow-border-green</div>
+            <div class="fx-glow-label">أخضر</div>
+          </div>
+
+          <div class="card glow-border glow-border-yellow fx-glow-card">
+            <div class="fx-glow-name fx-glow-name--yellow">glow-border-yellow</div>
+            <div class="fx-glow-label">أصفر</div>
+          </div>
+
+          <div class="card glow-border glow-border-red fx-glow-card">
+            <div class="fx-glow-name fx-glow-name--red">glow-border-red</div>
+            <div class="fx-glow-label">أحمر</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Always-on Glow -->
+      <div class="demo-section">
+        <p class="demo-section-title">توهج دائم</p>
+        <div class="fx-grid-glow">
+
+          <div class="fx-always-glow-card fx-always-glow-card--cyan">
+            <div class="fx-glow-name fx-glow-name--cyan">glow-cyan</div>
+            <div class="fx-glow-label">سماوي</div>
+          </div>
+
+          <div class="fx-always-glow-card fx-always-glow-card--magenta">
+            <div class="fx-glow-name fx-glow-name--magenta">glow-magenta</div>
+            <div class="fx-glow-label">وردي</div>
+          </div>
+
+          <div class="fx-always-glow-card fx-always-glow-card--green">
+            <div class="fx-glow-name fx-glow-name--green">glow-green</div>
+            <div class="fx-glow-label">أخضر</div>
+          </div>
+
+          <div class="fx-always-glow-card fx-always-glow-card--yellow">
+            <div class="fx-glow-name fx-glow-name--yellow">glow-yellow</div>
+            <div class="fx-glow-label">أصفر</div>
+          </div>
+
+          <div class="fx-always-glow-card fx-always-glow-card--red">
+            <div class="fx-glow-name fx-glow-name--red">glow-red</div>
+            <div class="fx-glow-label">أحمر</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Text Glow -->
+      <div class="demo-section">
+        <p class="demo-section-title">توهج النصوص</p>
+        <div class="card fx-text-glow-card">
+          <div class="fx-text-glow-item text-glow-cyan">text-glow-cyan — توهج سماوي</div>
+          <div class="fx-text-glow-item text-glow-magenta">text-glow-magenta — توهج وردي</div>
+          <div class="fx-text-glow-item text-glow-green">text-glow-green — توهج أخضر</div>
+        </div>
+      </div>
+
+      <!-- Glass Effects -->
+      <div class="demo-section">
+        <p class="demo-section-title">تأثيرات الزجاج</p>
+        <div class="fx-glass-scene">
+          <!-- Ambient orbs -->
+          <div class="ambient-orb ambient-orb-cyan" style="width:300px;height:300px;top:-80px;right:-80px;"></div>
+          <div class="ambient-orb ambient-orb-magenta" style="width:250px;height:250px;bottom:-60px;left:-60px;"></div>
+          <div class="fx-glass-grid">
+
+            <div class="glass fx-glass-card">
+              <div class="fx-glass-name">.glass</div>
+              <div class="fx-glass-desc">خلفية زجاجية مع blur وحدود شفافة</div>
+            </div>
+
+            <div class="glass-raised fx-glass-card">
+              <div class="fx-glass-name">.glass-raised</div>
+              <div class="fx-glass-desc">سطح مرفوع مع تأثير زجاجي</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Gradient Background -->
+      <div class="demo-section">
+        <p class="demo-section-title">خلفية تدرجية — pseudo elements</p>
+        <div class="gradient-bg fx-gradient-box">
+          <div class="fx-gradient-inner">
+            <div class="fx-gradient-tag">.gradient-bg</div>
+            <div class="fx-gradient-title">خلفية تدرجية</div>
+            <div class="fx-gradient-desc">layer1 عبر ::before — layer2 عبر ::after</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cyber Grid -->
+      <div class="demo-section">
+        <p class="demo-section-title">خلفية الشبكة</p>
+        <div class="cyber-grid fx-cyber-box">
+          <span class="fx-cyber-label">.cyber-grid</span>
+        </div>
+      </div>
+
+      <!-- Animations -->
+      <div class="demo-section">
+        <p class="demo-section-title">الأنيميشن</p>
+        <div class="fx-anim-grid">
+
+          <div class="card fx-anim-card">
+            <div class="animate-float fx-anim-box fx-anim-box--cyan"></div>
+            <div class="fx-anim-name">animate-float</div>
+          </div>
+
+          <div class="card fx-anim-card">
+            <div class="animate-pulse-glow fx-anim-box fx-anim-box--magenta"></div>
+            <div class="fx-anim-name">animate-pulse-glow</div>
+          </div>
+
+          <div class="card fx-anim-card">
+            <div class="fx-anim-ping-wrap">
+              <div class="animate-ping fx-anim-ping-ring"></div>
+              <div class="fx-anim-ping-dot"></div>
+            </div>
+            <div class="fx-anim-name">animate-ping</div>
+          </div>
+
+          <div class="card fx-anim-card">
+            <div class="animate-fade-in fx-anim-box fx-anim-box--warning"></div>
+            <div class="fx-anim-name">animate-fade-in</div>
+          </div>
+
+          <div class="card fx-anim-card">
+            <div class="animate-scale-in fx-anim-box fx-anim-box--danger"></div>
+            <div class="fx-anim-name">animate-scale-in</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Status Dots -->
+      <div class="demo-section">
+        <p class="demo-section-title">نقاط الحالة</p>
+        <div class="card fx-status-card">
+          <div class="fx-status-item">
+            <span class="status-dot status-dot--success"></span>
+            <span class="fx-status-text">متصل</span>
+          </div>
+          <div class="fx-status-item">
+            <span class="status-dot is-live status-dot--live"></span>
+            <span class="fx-status-text">مباشر</span>
+          </div>
+          <div class="fx-status-item">
+            <span class="status-dot status-dot--warning"></span>
+            <span class="fx-status-text">انتظار</span>
+          </div>
+          <div class="fx-status-item">
+            <span class="status-dot status-dot--danger"></span>
+            <span class="fx-status-text">خطأ</span>
+          </div>
+          <div class="fx-status-item">
+            <span class="status-dot status-dot--muted"></span>
+            <span class="fx-status-text">غير متصل</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /page-effects -->
+  <div id="page-buttons" class="page-section">
+  <div class="page-content">
+
+    <!-- Header -->
+    <div class="page-header">
+      <p class="text-label mb-3">المكونات</p>
+      <h1 class="text-display text-glow-cyan mb-4">الايكون و الازرار</h1>
+      <p class="text-body-sm">جميع أنواع الأزرار مبنية على كلاس <span class="text-accent font-mono">.btn</span> مع مُعدِّلات للنوع والحجم والحالة.</p>
+    </div>
+
+    <!-- الأزرار الأساسية -->
+    <div class="demo-section">
+      <p class="demo-section-title">الأزرار الأساسية</p>
+      <div class="grid-auto-fill-md">
+
+        <!-- إضافة جديد -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-primary</span>
+            <span class="text-caption text-accent">primary</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- حذف المحدد -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-danger</span>
+            <span class="text-caption text-danger">danger</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-danger">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              حذف المحدد
+            </button>
+          </div>
+        </div>
+
+        <!-- طباعة التقرير -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-secondary</span>
+            <span class="text-caption text-secondary">secondary</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-secondary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              طباعة التقرير
+            </button>
+          </div>
+        </div>
+
+        <!-- تصدير Excel -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-success</span>
+            <span class="text-caption text-success">success</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-success">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              تصدير Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- رفع صورة -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-info</span>
+            <span class="text-caption" style="color:var(--color-purple-500);">info</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-info">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+              رفع صورة
+            </button>
+          </div>
+        </div>
+
+        <!-- نسخ احتياطي -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-warning</span>
+            <span class="text-caption text-warning">warning</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-warning">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="12"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+              نسخ احتياطي
+            </button>
+          </div>
+        </div>
+
+        <!-- استعادة -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-neutral</span>
+            <span class="text-caption" style="color:var(--color-blue-400);">neutral</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-neutral">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+              استعادة
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- الأحجام -->
+    <div class="demo-section">
+      <p class="demo-section-title">الأحجام</p>
+      <div class="grid-auto-fill-md">
+
+        <!-- sm -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-sm</span>
+            <span class="text-caption text-muted">xs / 12px</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-primary btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- default -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn</span>
+            <span class="text-caption text-muted">sm / 14px</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- lg -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-lg</span>
+            <span class="text-caption text-muted">base / 16px</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-primary btn-lg">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- full -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">.btn-full</span>
+            <span class="text-caption text-muted">100% عرض</span>
+          </div>
+          <div class="p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-primary btn-full">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- أزرار الأيقونة -->
+    <div class="demo-section">
+      <p class="demo-section-title">أزرار الأيقونة — عادي</p>
+      <div class="grid-auto-fill-md">
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-primary</span><span class="text-caption text-accent">primary</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-primary btn-icon" data-tooltip="إضافة جديد"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-danger</span><span class="text-caption text-danger">danger</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-danger btn-icon" data-tooltip="حذف المحدد"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-secondary</span><span class="text-caption text-secondary">secondary</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-secondary btn-icon" data-tooltip="طباعة التقرير"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-success</span><span class="text-caption text-success">success</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-success btn-icon" data-tooltip="تصدير Excel"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-info</span><span class="text-caption" style="color:var(--color-purple-500);">info</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-info btn-icon" data-tooltip="رفع صورة"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-warning</span><span class="text-caption text-warning">warning</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-warning btn-icon" data-tooltip="نسخ احتياطي"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="12"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></button></div></div>
+        <div class="card p-6 flex flex-col gap-5"><div class="flex items-center justify-between"><span class="text-caption font-mono text-muted font-bold">btn-neutral</span><span class="text-caption" style="color:var(--color-blue-400);">neutral</span></div><div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg"><button class="btn btn-neutral btn-icon" data-tooltip="استعادة"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></button></div></div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <p class="demo-section-title">أزرار الأيقونة — outline</p>
+      <div class="grid-auto-fill-md">
+
+        <!-- إضافة جديد -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-primary</span>
+            <span class="text-caption text-accent">primary</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-primary btn-icon" data-tooltip="إضافة جديد">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- حذف المحدد -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-danger</span>
+            <span class="text-caption text-danger">danger</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-danger btn-icon" data-tooltip="حذف المحدد">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- طباعة التقرير -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-secondary</span>
+            <span class="text-caption text-secondary">secondary</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-secondary btn-icon" data-tooltip="طباعة التقرير">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- تصدير Excel -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-success</span>
+            <span class="text-caption text-success">success</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-success btn-icon" data-tooltip="تصدير Excel">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- رفع صورة -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-info</span>
+            <span class="text-caption" style="color:var(--color-purple-500);">info</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-info btn-icon" data-tooltip="رفع صورة">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- نسخ احتياطي -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-warning</span>
+            <span class="text-caption text-warning">warning</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-warning btn-icon" data-tooltip="نسخ احتياطي">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="12"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- استعادة -->
+        <div class="card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-mono text-muted font-bold">btn-outline-neutral</span>
+            <span class="text-caption" style="color:var(--color-blue-400);">neutral</span>
+          </div>
+          <div class="flex items-center justify-center p-6 bg-surface-bg rounded-lg">
+            <button class="btn btn-outline-neutral btn-icon" data-tooltip="استعادة">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- أيقونات شائعة -->
+    <div class="demo-section">
+      <p class="demo-section-title">أيقونات شائعة</p>
+      <div class="demo-grid">
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">call</span>
+            <span class="demo-card__tag demo-card__tag--success">success</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-success btn-icon" data-tooltip="اتصال"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+            <button class="btn btn-outline-success btn-icon" data-tooltip="اتصال"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">statistics</span>
+            <span class="demo-card__tag demo-card__tag--primary">primary</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-primary btn-icon" data-tooltip="الإحصائيات"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></button>
+            <button class="btn btn-outline-primary btn-icon" data-tooltip="الإحصائيات"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">users</span>
+            <span class="demo-card__tag demo-card__tag--info">info</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-info btn-icon" data-tooltip="المستخدمين"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></button>
+            <button class="btn btn-outline-info btn-icon" data-tooltip="المستخدمين"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">view-toggle</span>
+            <span class="demo-card__tag demo-card__tag--muted">table / cards</span>
+          </div>
+          <div class="demo-card__preview">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-icon btn-lg is-active" data-tooltip="عرض جدول" onclick="toggleView(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></button>
+              <button class="btn btn-secondary btn-icon btn-lg" data-tooltip="عرض بطاقات" onclick="toggleView(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">clock</span>
+            <span class="demo-card__tag demo-card__tag--warning">warning</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-warning btn-icon" data-tooltip="قيد الانتظار"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
+            <button class="btn btn-outline-warning btn-icon" data-tooltip="قيد الانتظار"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">check</span>
+            <span class="demo-card__tag demo-card__tag--success">success</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-success btn-icon" data-tooltip="موافقة"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
+            <button class="btn btn-outline-success btn-icon" data-tooltip="موافقة"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">close / reject</span>
+            <span class="demo-card__tag demo-card__tag--danger">danger</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-danger btn-icon" data-tooltip="رفض"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <button class="btn btn-outline-danger btn-icon" data-tooltip="رفض"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">circle-slash</span>
+            <span class="demo-card__tag demo-card__tag--muted">disabled</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-secondary btn-icon" data-tooltip="معطّل"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+            <button class="btn btn-outline-secondary btn-icon" data-tooltip="معطّل"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">location</span>
+            <span class="demo-card__tag demo-card__tag--info">location</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <button class="btn btn-info btn-icon" data-tooltip="الموقع"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></button>
+            <button class="btn btn-outline-info btn-icon" data-tooltip="الموقع"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- مجموعة الأزرار -->
+    <div class="demo-section">
+      <p class="demo-section-title">مجموعة الأزرار</p>
+      <div class="demo-group-wrap">
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">btn-group + btn-secondary</span>
+          </div>
+          <div class="demo-card__preview">
+            <div class="btn-group">
+              <button class="btn btn-secondary" data-tooltip="طباعة التقرير">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                طباعة
+              </button>
+              <button class="btn btn-secondary" data-tooltip="تصدير Excel">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                تصدير
+              </button>
+              <button class="btn btn-secondary" data-tooltip="رفع صورة">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                رفع
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">btn-group + btn-icon</span>
+          </div>
+          <div class="demo-card__preview">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-icon btn-lg" data-tooltip="إضافة جديد">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <button class="btn btn-secondary btn-icon btn-lg" data-tooltip="حذف المحدد">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+              <button class="btn btn-secondary btn-icon btn-lg" data-tooltip="نسخ احتياطي">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="21" x2="12" y2="12"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+              </button>
+              <button class="btn btn-secondary btn-icon btn-lg" data-tooltip="استعادة">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">btn-group — mixed</span>
+          </div>
+          <div class="demo-card__preview">
+            <div class="btn-group">
+              <button class="btn btn-primary" data-tooltip="إضافة جديد">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                إضافة
+              </button>
+              <button class="btn btn-secondary" data-tooltip="طباعة التقرير">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                طباعة
+              </button>
+              <button class="btn btn-danger" data-tooltip="حذف المحدد">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                حذف
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- شارات الحالة -->
+    <div class="demo-section">
+      <p class="demo-section-title">شارات الحالة</p>
+      <p class="text-body-sm mb-4 text-muted">الانحناء الافتراضي <span class="text-accent font-mono">--radius-sm</span> — يمكن تعديله بأي قيمة من <span class="text-accent font-mono">--radius-sm</span> إلى <span class="text-accent font-mono">--radius-full</span> كما هو موضح في قسم «المسافات والمقاييس ← نصف القطر».</p>
+      <div class="demo-grid">
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">قيد الانتظار</span>
+            <span class="demo-card__tag demo-card__tag--warning">pending</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <span class="badge badge-pending">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              قيد الانتظار
+            </span>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">رفض / إلغاء</span>
+            <span class="demo-card__tag demo-card__tag--danger">rejected</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <span class="badge badge-rejected">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              مرفوض
+            </span>
+            <span class="badge badge-rejected">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              ملغي
+            </span>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">موثق / تمت الموافقة</span>
+            <span class="demo-card__tag demo-card__tag--success">approved</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <span class="badge badge-approved">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              موثق
+            </span>
+            <span class="badge badge-approved">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              تمت الموافقة
+            </span>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">معطّل</span>
+            <span class="demo-card__tag demo-card__tag--muted">disabled</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <span class="badge badge-disabled">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              معطّل
+            </span>
+          </div>
+        </div>
+
+        <div class="card demo-card">
+          <div class="demo-card__header">
+            <span class="demo-card__label">جاري التحميل</span>
+            <span class="demo-card__tag demo-card__tag--primary">loading</span>
+          </div>
+          <div class="demo-card__preview demo-card__preview--gap">
+            <span class="badge badge-loading">جاري التحميل</span>
+            <span class="badge badge-loading">جاري المعالجة</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+  <div id="page-cards" class="page-section">
+    <div class="page-content">
+
+      <!-- Header -->
+      <div class="page-header">
+        <p class="text-label mb-3">المكونات</p>
+        <h1 class="text-display text-glow-cyan mb-4">البطاقات</h1>
+        <p class="text-body-sm">مجموعة متنوعة من البطاقات مع تأثيرات زجاجية وتوهج متقدم — من البطاقة البسيطة إلى بطاقات الإحصائيات التفاعلية.</p>
+      </div>
+
+      <!-- Basic Cards -->
+      <div class="demo-section">
+        <p class="demo-section-title">البطاقات الأساسية</p>
+        <div class="grid-auto-fill-md">
+
+          <div class="card">
+            <!-- Glass highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/30 dark:from-white/8 to-transparent pointer-events-none" style="border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="9" y2="9"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-heading-3 text-primary font-bold">بطاقة بسيطة</h3>
+                  <p class="text-caption text-muted">مع أيقونة ملونة</p>
+                </div>
+              </div>
+              <p class="text-body text-secondary mb-6 leading-relaxed">هذه بطاقة أساسية مع خلفية زجاجية وحدود ناعمة. تحتوي على عنوان ونص وصفي وأزرار تفاعلية.</p>
+              <div class="flex gap-3">
+                <button class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  عرض التفاصيل
+                </button>
+                <button class="btn btn-secondary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  تعديل
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <!-- Glass highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/30 dark:from-white/8 to-transparent pointer-events-none" style="border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;"></div>
+            
+            <!-- Floating orb -->
+            <div class="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-accent-success/20 to-accent-success/10 rounded-full blur-xl"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-success/20 to-accent-success/10 border border-accent-success/30 flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-success"><path d="M9 11H5a2 2 0 0 0-2 2v3c0 1.1.9 2 2 2h2"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M9 7V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v3"/><rect x="8" y="15" width="8" height="4" rx="1"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-heading-3 text-primary font-bold">بطاقة مع أيقونة</h3>
+                    <p class="text-caption text-muted">مع رمز ملون وتوهج</p>
+                  </div>
+                </div>
+                <span class="badge badge-approved">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  نشط
+                </span>
+              </div>
+              <p class="text-body-sm text-secondary leading-relaxed">بطاقة تحتوي على أيقونة ملونة في الأعلى مع عنوان ووصف مختصر وشارة حالة.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <!-- Glass highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/30 dark:from-white/8 to-transparent pointer-events-none" style="border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;"></div>
+            
+            <!-- Animated gradient border -->
+            <div class="absolute inset-0 bg-gradient-to-r from-accent-primary/20 via-accent-secondary/20 to-accent-primary/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10 group">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-accent-success animate-pulse"></div>
+                    <span class="text-xs font-bold text-accent-success uppercase tracking-wider">محدثة منذ دقيقتين</span>
+                  </div>
+                  <h3 class="text-heading-3 text-primary font-bold mb-1">بطاقة مع إجراءات</h3>
+                  <p class="text-caption text-muted">مع قائمة ومعلومات التحديث</p>
+                </div>
+                <div class="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                  <button class="btn btn-secondary btn-icon btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                  </button>
+                </div>
+              </div>
+              <p class="text-body-sm text-secondary mb-4 leading-relaxed">بطاقة مع قائمة إجراءات في الزاوية اليمنى ومعلومات التحديث مع شارات الحالة.</p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    مفعل
+                  </span>
+                  <span class="text-caption text-muted">• 3 مهام مكتملة</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-accent-primary"></div>
+                  <div class="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
+                  <div class="w-1.5 h-1.5 rounded-full bg-accent-primary/30"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="demo-section">
+        <p class="demo-section-title">بطاقات الإحصائيات</p>
+        <div class="grid-auto-fill-md">
+
+          <div class="stat-card group" data-accent="cyan">
+            <div class="stat-card__orb" data-color="cyan"></div>
+            
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex-1">
+                <div class="stat-card__label">إجمالي المستخدمين</div>
+                <div class="stat-card__value group-hover:scale-105 transition-transform duration-300">2,847</div>
+                <div class="stat-card__change is-positive">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                  +12.5%
+                </div>
+              </div>
+              <div class="stat-card__icon group-hover:scale-110 transition-transform duration-300" data-color="cyan">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card group" data-accent="green">
+            <div class="stat-card__orb" data-color="green"></div>
+            
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex-1">
+                <div class="stat-card__label">إجمالي التحميلات</div>
+                <div class="stat-card__value group-hover:scale-105 transition-transform duration-300">18.2K</div>
+                <div class="stat-card__change is-positive">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                  +8.2%
+                </div>
+              </div>
+              <div class="stat-card__icon group-hover:rotate-12 transition-transform duration-300" data-color="green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card group" data-accent="yellow">
+            <div class="stat-card__orb" data-color="yellow"></div>
+            
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex-1">
+                <div class="stat-card__label">قيد المعالجة</div>
+                <div class="stat-card__value group-hover:scale-105 transition-transform duration-300">127</div>
+                <div class="stat-card__change is-neutral">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  بدون تغيير
+                </div>
+              </div>
+              <div class="stat-card__icon group-hover:animate-pulse" data-color="yellow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card group" data-accent="red">
+            <div class="stat-card__orb" data-color="red"></div>
+            
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex-1">
+                <div class="stat-card__label">الأخطاء</div>
+                <div class="stat-card__value group-hover:scale-105 transition-transform duration-300">23</div>
+                <div class="stat-card__change is-negative">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                  -4.1%
+                </div>
+              </div>
+              <div class="stat-card__icon group-hover:animate-bounce" data-color="red">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Table Cards Section -->
+      <div class="demo-section">
+        <p class="demo-section-title">الكاردات الجدولية — تحويل الجداول إلى كاردات</p>
+        <p class="text-body-sm mb-6 text-muted">عرض البيانات الجدولية في شكل كاردات تفاعلية مع إمكانية التبديل بين العرضين</p>
+        
+        <!-- View Toggle -->
+        <div class="flex justify-between items-center mb-6">
+          <div class="view-toggle">
+            <button class="view-toggle__btn is-active" onclick="toggleTableView('table', this)" data-tooltip="عرض جدولي">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            </button>
+            <button class="view-toggle__btn" onclick="toggleTableView('cards', this)" data-tooltip="عرض كاردات">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Table View -->
+        <div id="table-view" class="table-wrapper">
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th class="table__header-cell">رقم الطلب</th>
+                <th class="table__header-cell">الموظف</th>
+                <th class="table__header-cell">القسم</th>
+                <th class="table__header-cell">الحالة</th>
+                <th class="table__header-cell">تاريخ الإنشاء</th>
+                <th class="table__header-cell">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A981</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">سارة أحمد</span>
+                </td>
+                <td class="table__cell">العمليات القانونية</td>
+                <td class="table__cell">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    موافق عليه
+                  </span>
+                </td>
+                <td class="table__cell">12 نوفمبر، 10:00 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </button>
+                    <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A982</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">ميكائيل روس</span>
+                </td>
+                <td class="table__cell">أمن المعلومات</td>
+                <td class="table__cell">
+                  <span class="badge badge-pending">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    قيد الانتظار
+                  </span>
+                </td>
+                <td class="table__cell">14 نوفمبر، 08:30 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </button>
+                    <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A983</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">د. علين</span>
+                </td>
+                <td class="table__cell">هندسة الأنظمة</td>
+                <td class="table__cell">
+                  <span class="badge badge-rejected">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    مرفوض
+                  </span>
+                </td>
+                <td class="table__cell">15 نوفمبر، 14:45 م</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </button>
+                    <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Cards View -->
+        <div id="cards-view" class="table-grid" style="display: none;">
+          <!-- Card 1 - Approved -->
+          <div class="table-card table-card--approved">
+            <!-- Specular highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent pointer-events-none z-0"></div>
+            
+            <!-- Status Glow -->
+            <div class="status-glow status-glow--approved" style="top: -1.5rem; right: -1.5rem;"></div>
+            
+            <div class="table-card__header">
+              <div>
+                <div class="table-card__id">RQ-A981</div>
+                <h4 class="table-card__title">سارة أحمد</h4>
+              </div>
+              <div class="table-card__menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </div>
+            </div>
+            
+            <div class="table-card__body">
+              <div class="table-card__field">
+                <span class="table-card__field-label">القسم</span>
+                <span class="table-card__field-value">العمليات القانونية</span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">الحالة</span>
+                <span class="badge badge-approved">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  موافق عليه
+                </span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">تاريخ الإنشاء</span>
+                <span class="table-card__field-value">12 نوفمبر، 10:00 ص</span>
+              </div>
+            </div>
+            
+            <div class="table-card__footer">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </button>
+                <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </button>
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 2 - Pending -->
+          <div class="table-card table-card--pending">
+            <!-- Specular highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent pointer-events-none z-0"></div>
+            
+            <!-- Status Glow -->
+            <div class="status-glow status-glow--pending" style="top: -1.5rem; right: -1.5rem;"></div>
+            
+            <div class="table-card__header">
+              <div>
+                <div class="table-card__id">RQ-A982</div>
+                <h4 class="table-card__title">ميكائيل روس</h4>
+              </div>
+              <div class="table-card__menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </div>
+            </div>
+            
+            <div class="table-card__body">
+              <div class="table-card__field">
+                <span class="table-card__field-label">القسم</span>
+                <span class="table-card__field-value">أمن المعلومات</span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">الحالة</span>
+                <span class="badge badge-pending">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  قيد الانتظار
+                </span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">تاريخ الإنشاء</span>
+                <span class="table-card__field-value">14 نوفمبر، 08:30 ص</span>
+              </div>
+            </div>
+            
+            <div class="table-card__footer">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </button>
+                <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </button>
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 3 - Rejected -->
+          <div class="table-card table-card--rejected">
+            <!-- Specular highlight -->
+            <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/5 to-transparent pointer-events-none z-0"></div>
+            
+            <!-- Status Glow -->
+            <div class="status-glow status-glow--rejected" style="top: -1.5rem; right: -1.5rem;"></div>
+            
+            <div class="table-card__header">
+              <div>
+                <div class="table-card__id">RQ-A983</div>
+                <h4 class="table-card__title">د. علين</h4>
+              </div>
+              <div class="table-card__menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </div>
+            </div>
+            
+            <div class="table-card__body">
+              <div class="table-card__field">
+                <span class="table-card__field-label">القسم</span>
+                <span class="table-card__field-value">هندسة الأنظمة</span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">الحالة</span>
+                <span class="badge badge-rejected">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  مرفوض
+                </span>
+              </div>
+              <div class="table-card__field">
+                <span class="table-card__field-label">تاريخ الإنشاء</span>
+                <span class="table-card__field-value">15 نوفمبر، 14:45 م</span>
+              </div>
+            </div>
+            
+            <div class="table-card__footer">
+              <div class="flex items-center gap-2">
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="btn btn-success btn-icon btn-sm" data-tooltip="اتصال">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4A2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </button>
+                <button class="btn btn-info btn-icon btn-sm" data-tooltip="الموقع">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </button>
+                <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div><!-- /demo-page -->
+
+  <script>
+    function toggleView(el) {
+      el.closest('.btn-group').querySelectorAll('.btn').forEach(b => b.classList.remove('is-active'));
+      el.classList.add('is-active');
+    }
+    function setTheme(name) {
+      document.documentElement.setAttribute('data-theme', name);
+    }
+    function openNav() {
+      document.getElementById('oc-nav').classList.add('is-open');
+      document.getElementById('oc-backdrop').classList.add('is-open');
+    }
+    function closeNav() {
+      document.getElementById('oc-nav').classList.remove('is-open');
+      document.getElementById('oc-backdrop').classList.remove('is-open');
+    }
+    const pageLabels = {
+      colors: 'الألوان', typography: 'الطباعة', spacing: 'المسافات والمقاييس',
+      effects: 'التأثيرات والظلال', buttons: 'الايكون و الازرار', cards: 'البطاقات',
+      forms: 'النماذج', tables: 'الجداول', navigation: 'التنقل', modals: 'النوافذ المنبثقة'
+    };
+    function navigate(page, el) {
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('is-active'));
+      document.getElementById('page-' + page).classList.add('is-active');
+      document.querySelectorAll('.oc-nav__item').forEach(i => i.classList.remove('is-active'));
+      el.classList.add('is-active');
+      document.getElementById('topbar-page').textContent = pageLabels[page];
+      closeNav();
+    }
+    
+    function toggleTableView(viewType, button) {
+      const tableView = document.getElementById('table-view');
+      const cardsView = document.getElementById('cards-view');
+      const buttons = button.parentElement.querySelectorAll('.view-toggle__btn');
+      
+      // Remove active class from all buttons
+      buttons.forEach(btn => btn.classList.remove('is-active'));
+      
+      // Add active class to clicked button
+      button.classList.add('is-active');
+      
+      // Toggle views
+      if (viewType === 'table') {
+        tableView.style.display = 'block';
+        cardsView.style.display = 'none';
+      } else {
+        tableView.style.display = 'none';
+        cardsView.style.display = 'grid';
+      }
+    }
+  </script>
+
+</body>
+</html>

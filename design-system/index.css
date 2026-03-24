@@ -1,0 +1,27 @@
+/* ============================================================
+   DESIGN SYSTEM — Main Entry Point
+   Import order matters: tokens → themes → base → layouts → components
+   ============================================================ */
+
+/* 1. Tokens */
+@import './tokens/colors.css';
+@import './tokens/scale.css';
+
+/* 2. Themes (must come after tokens so they can override) */
+@import './themes/themes.css';
+
+/* 3. Base */
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/effects.css';
+
+/* 4. Layouts */
+@import './layouts/layout.css';
+
+/* 5. Components */
+@import './components/button.css';
+@import './components/card.css';
+@import './components/navigation.css';
+@import './components/table.css';
+@import './components/form.css';
+@import './components/ui.css';

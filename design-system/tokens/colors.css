@@ -1,0 +1,61 @@
+/* ============================================================
+   COLOR TOKENS — Single source of truth for all color values
+   ============================================================ */
+
+:root {
+  /* ── Primitive palette ── */
+  --color-cyan-100: #e0fffe;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #00f0ff;
+  --color-cyan-600: #00c8d4;
+
+  --color-magenta-500: #ff00e5;
+  --color-magenta-600: #cc00b8;
+
+  --color-green-500: #00ff88;
+  --color-green-600: #00cc6a;
+
+  --color-yellow-500: #ffcc00;
+  --color-yellow-600: #e6b800;
+
+  --color-red-500: #ff3366;
+  --color-red-600: #cc1a44;
+
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-400: #60a5fa;
+
+  --color-purple-500: #a855f7;
+  --color-purple-400: #c084fc;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ── Semantic surface tokens (overridden per theme) ── */
+  --surface-bg:        #0b0f1a;
+  --surface-base:      rgba(15, 23, 42, 0.60);
+  --surface-raised:    rgba(15, 23, 42, 0.80);
+  --surface-overlay:   rgba(15, 23, 42, 0.95);
+  --surface-sidebar:   rgba(11, 15, 26, 0.70);
+
+  --border-subtle:     rgba(0, 240, 255, 0.10);
+  --border-default:    rgba(0, 240, 255, 0.18);
+  --border-strong:     rgba(0, 240, 255, 0.40);
+
+  --text-primary:      #e0e6f0;
+  --text-secondary:    #94a3b8;
+  --text-muted:        #64748b;
+  --text-inverse:      #0b0f1a;
+
+  --accent-primary:    var(--color-cyan-500);
+  --accent-secondary:  var(--color-magenta-500);
+  --accent-success:    var(--color-green-500);
+  --accent-warning:    var(--color-yellow-500);
+  --accent-danger:     var(--color-red-500);
+
+  /* ── Glass effect ── */
+  --glass-bg:          rgba(15, 23, 42, 0.40);
+  --glass-border:      rgba(0, 240, 255, 0.15);
+  --glass-blur:        20px;
+  --glass-saturate:    180%;
+}
