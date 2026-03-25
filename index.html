@@ -202,6 +202,11 @@
     </div>
     <div class="oc-nav__body">
       <span class="oc-nav__section">الأساسيات</span>
+      <div class="oc-nav__item" onclick="navigate('themes', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        الثيمات
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
       <div class="oc-nav__item is-active" onclick="navigate('colors', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M2 12h20"/></svg>
         الألوان
@@ -231,17 +236,22 @@
       <div class="oc-nav__item" onclick="navigate('buttons', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="3"/></svg>
         الايكون و الازرار
-        <span class="oc-nav__badge">قريباً</span>
+        <span class="oc-nav__badge">مكتمل</span>
+      </div>
+      <div class="oc-nav__item" onclick="navigate('search', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        البحث والفلاتر
+        <span class="oc-nav__badge">جديد</span>
       </div>
       <div class="oc-nav__item" onclick="navigate('forms', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        النماذج
-        <span class="oc-nav__badge">قريباً</span>
+        النماذج الديناميكية
+        <span class="oc-nav__badge">جديد</span>
       </div>
       <div class="oc-nav__item" onclick="navigate('tables', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
         الجداول
-        <span class="oc-nav__badge">قريباً</span>
+        <span class="oc-nav__badge">مكتمل</span>
       </div>
       <div class="oc-nav__item" onclick="navigate('navigation', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -251,7 +261,7 @@
       <div class="oc-nav__item" onclick="navigate('modals', this)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
         النوافذ المنبثقة
-        <span class="oc-nav__badge">قريباً</span>
+        <span class="oc-nav__badge">مكتمل</span>
       </div>
     </div>
     <div class="oc-nav__footer">
@@ -280,6 +290,200 @@
   </header>
 
   <div class="demo-page">
+  <!-- ══ Page: Themes ══ -->
+  <div id="page-themes" class="page-section">
+    <div class="page-content">
+
+      <div class="page-header">
+        <p class="text-label mb-3">الأساسيات</p>
+        <h1 class="text-display text-glow-cyan mb-4">الثيمات</h1>
+        <p class="text-body-sm">خمسة ثيمات جاهزة — كل ثيم يغيّر مجموعة متغيرات CSS كاملة دفعة واحدة. اضغط على أي ثيم لتطبيقه فوراً.</p>
+      </div>
+
+      <!-- Theme Switcher Cards -->
+      <div class="demo-section">
+        <p class="demo-section-title">تبديل الثيم</p>
+        <div class="grid-auto-fill-sm">
+
+          <button onclick="setTheme('dark')" class="card glow-border" style="text-align:right;cursor:pointer;">
+            <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:#0b0f1a;border:2px solid rgba(0,240,255,0.4);box-shadow:0 0 15px rgba(0,240,255,0.3);margin-bottom:var(--space-4);"></div>
+            <div class="text-body font-bold text-primary mb-1">داكن</div>
+            <div class="text-caption text-muted">dark</div>
+            <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#00f0ff;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#ff00e5;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#00ff88;"></div>
+            </div>
+          </button>
+
+          <button onclick="setTheme('light')" class="card glow-border" style="text-align:right;cursor:pointer;">
+            <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:#f0f4f8;border:2px solid rgba(8,145,178,0.4);box-shadow:0 0 15px rgba(8,145,178,0.2);margin-bottom:var(--space-4);"></div>
+            <div class="text-body font-bold text-primary mb-1">فاتح</div>
+            <div class="text-caption text-muted">light</div>
+            <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#0891b2;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#d946ef;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#10b981;"></div>
+            </div>
+          </button>
+
+          <button onclick="setTheme('neon')" class="card glow-border glow-border-magenta" style="text-align:right;cursor:pointer;">
+            <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:#050008;border:2px solid rgba(255,0,229,0.5);box-shadow:0 0 15px rgba(255,0,229,0.4);margin-bottom:var(--space-4);"></div>
+            <div class="text-body font-bold text-primary mb-1">نيون</div>
+            <div class="text-caption text-muted">neon</div>
+            <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#ff00e5;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#00f0ff;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#00ff88;"></div>
+            </div>
+          </button>
+
+          <button onclick="setTheme('soft-glass')" class="card glow-border" style="text-align:right;cursor:pointer;">
+            <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:#dde8f5;border:2px solid rgba(100,150,220,0.4);box-shadow:0 0 15px rgba(100,150,220,0.2);margin-bottom:var(--space-4);"></div>
+            <div class="text-body font-bold text-primary mb-1">زجاجي</div>
+            <div class="text-caption text-muted">soft-glass</div>
+            <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#5b8dee;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#c084fc;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#34d399;"></div>
+            </div>
+          </button>
+
+          <button onclick="setTheme('high-contrast')" class="card glow-border" style="text-align:right;cursor:pointer;">
+            <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:#000;border:2px solid rgba(255,255,255,0.8);margin-bottom:var(--space-4);"></div>
+            <div class="text-body font-bold text-primary mb-1">تباين عالي</div>
+            <div class="text-caption text-muted">high-contrast</div>
+            <div style="margin-top:var(--space-3);display:flex;gap:var(--space-2);">
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#fff;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#ffff00;"></div>
+              <div style="width:1rem;height:1rem;border-radius:var(--radius-full);background:#00ff00;"></div>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Theme Preview -->
+      <div class="demo-section">
+        <p class="demo-section-title">معاينة الثيم الحالي</p>
+        <p class="text-body-sm mb-6 text-muted">هذه البطاقات تعكس الثيم المختار حالياً — غيّر الثيم من الأعلى وانظر كيف تتغيّر.</p>
+        <div class="grid-auto-fill-md">
+
+          <!-- Stat card preview -->
+          <div class="stat-card" data-accent="cyan">
+            <div class="stat-card__orb" data-color="cyan"></div>
+            <div class="flex items-start justify-between mb-5">
+              <div class="flex-1">
+                <div class="stat-card__label">إجمالي المستخدمين</div>
+                <div class="stat-card__value">2,847</div>
+                <div class="stat-card__change is-positive">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                  +12.5%
+                </div>
+              </div>
+              <div class="stat-card__icon" data-color="cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Glass card preview -->
+          <div class="card">
+            <div class="flex items-center gap-3 mb-4">
+              <div style="width:2.5rem;height:2.5rem;border-radius:var(--radius-xl);background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary));display:flex;align-items:center;justify-content:center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <div>
+                <div class="text-body font-bold text-primary">بطاقة زجاجية</div>
+                <div class="text-caption text-muted">تتأثر بالثيم</div>
+              </div>
+            </div>
+            <p class="text-body-sm text-secondary mb-4">هذه البطاقة تستخدم متغيرات CSS من الثيم الحالي — غيّر الثيم وانظر كيف تتغيّر الألوان.</p>
+            <div class="flex gap-2">
+              <button class="btn btn-primary btn-sm">أساسي</button>
+              <button class="btn btn-secondary btn-sm">ثانوي</button>
+              <button class="btn btn-danger btn-sm">خطر</button>
+            </div>
+          </div>
+
+          <!-- Badges preview -->
+          <div class="card">
+            <div class="text-body font-bold text-primary mb-4">شارات الحالة</div>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <span class="text-body-sm text-secondary">موافق عليه</span>
+                <span class="badge badge-approved">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  موافق عليه
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-body-sm text-secondary">قيد الانتظار</span>
+                <span class="badge badge-pending">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  قيد الانتظار
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-body-sm text-secondary">مرفوض</span>
+                <span class="badge badge-rejected">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  مرفوض
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input preview -->
+          <div class="card">
+            <div class="text-body font-bold text-primary mb-4">عناصر النماذج</div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <input class="input" type="text" placeholder="حقل نصي..." />
+              <div class="select-wrapper">
+                <select class="select">
+                  <option>اختر خياراً</option>
+                  <option>خيار 1</option>
+                  <option>خيار 2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Theme Tokens Table -->
+      <div class="demo-section">
+        <p class="demo-section-title">متغيرات كل ثيم</p>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th class="table__header-cell">المتغير</th>
+                <th class="table__header-cell">داكن</th>
+                <th class="table__header-cell">فاتح</th>
+                <th class="table__header-cell">نيون</th>
+                <th class="table__header-cell">زجاجي</th>
+                <th class="table__header-cell">تباين عالي</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--surface-bg</td><td class="table__cell">#0b0f1a</td><td class="table__cell">#f0f4f8</td><td class="table__cell">#050008</td><td class="table__cell">#dde8f5</td><td class="table__cell">#000000</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--accent-primary</td><td class="table__cell">#00f0ff</td><td class="table__cell">#0891b2</td><td class="table__cell">#ff00e5</td><td class="table__cell">#5b8dee</td><td class="table__cell">#ffffff</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--accent-secondary</td><td class="table__cell">#ff00e5</td><td class="table__cell">#d946ef</td><td class="table__cell">#00f0ff</td><td class="table__cell">#c084fc</td><td class="table__cell">#ffff00</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--accent-success</td><td class="table__cell">#00ff88</td><td class="table__cell">#10b981</td><td class="table__cell">#00ff88</td><td class="table__cell">#34d399</td><td class="table__cell">#00ff00</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--accent-warning</td><td class="table__cell">#ffcc00</td><td class="table__cell">#f59e0b</td><td class="table__cell">#ffcc00</td><td class="table__cell">#fbbf24</td><td class="table__cell">#ffaa00</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">--accent-danger</td><td class="table__cell">#ff3366</td><td class="table__cell">#ef4444</td><td class="table__cell">#ff3366</td><td class="table__cell">#f87171</td><td class="table__cell">#ff0000</td></tr>
+              <tr class="table__row"><td class="table__cell font-mono text-accent">color-scheme</td><td class="table__cell">dark</td><td class="table__cell">light</td><td class="table__cell">dark</td><td class="table__cell">light</td><td class="table__cell">dark</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /page-themes -->
+
   <!-- ══ Page: Colors ══ -->
   <div id="page-colors" class="page-section is-active">
   <div class="page-content">
@@ -1798,6 +2002,928 @@
     </div>
   </div>
 
+  <!-- ══ Page: Tables (inside Cards page) ══ -->
+  <div id="page-tables" class="page-section">
+    <div class="page-content">
+
+      <!-- Header -->
+      <div class="page-header">
+        <p class="text-label mb-3">المكونات</p>
+        <h1 class="text-display text-glow-cyan mb-4">الجداول</h1>
+        <p class="text-body-sm">جداول تفاعلية مع تأثيرات hover وإمكانية الفرز والتصفية — مبنية على نظام التصميم الكامل.</p>
+      </div>
+
+      <!-- Basic Table -->
+      <div class="demo-section">
+        <p class="demo-section-title">جدول أساسي</p>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th class="table__header-cell">رقم الطلب</th>
+                <th class="table__header-cell">الموظف</th>
+                <th class="table__header-cell">القسم</th>
+                <th class="table__header-cell">الحالة</th>
+                <th class="table__header-cell">التاريخ</th>
+                <th class="table__header-cell">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A981</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">سارة أحمد</span>
+                </td>
+                <td class="table__cell">العمليات القانونية</td>
+                <td class="table__cell">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    موافق عليه
+                  </span>
+                </td>
+                <td class="table__cell">12 نوفمبر، 10:00 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A982</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">ميكائيل روس</span>
+                </td>
+                <td class="table__cell">أمن المعلومات</td>
+                <td class="table__cell">
+                  <span class="badge badge-pending">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    قيد الانتظار
+                  </span>
+                </td>
+                <td class="table__cell">14 نوفمبر، 08:30 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A983</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">د. علين</span>
+                </td>
+                <td class="table__cell">هندسة الأنظمة</td>
+                <td class="table__cell">
+                  <span class="badge badge-rejected">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    مرفوض
+                  </span>
+                </td>
+                <td class="table__cell">15 نوفمبر، 14:45 م</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A984</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">فاطمة الزهراء</span>
+                </td>
+                <td class="table__cell">الموارد البشرية</td>
+                <td class="table__cell">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    موافق عليه
+                  </span>
+                </td>
+                <td class="table__cell">16 نوفمبر، 09:15 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">RQ-A985</td>
+                <td class="table__cell">
+                  <span class="font-semibold text-accent">محمد الخطيب</span>
+                </td>
+                <td class="table__cell">التسويق الرقمي</td>
+                <td class="table__cell">
+                  <span class="badge badge-pending">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    قيد الانتظار
+                  </span>
+                </td>
+                <td class="table__cell">17 نوفمبر، 11:20 ص</td>
+                <td class="table__cell">
+                  <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="عرض">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button class="btn btn-secondary btn-icon btn-sm" data-tooltip="تعديل">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn btn-danger btn-icon btn-sm" data-tooltip="حذف">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Compact Table -->
+      <div class="demo-section">
+        <p class="demo-section-title">جدول مضغوط</p>
+        <p class="text-body-sm mb-4 text-muted">جدول بحجم أصغر للبيانات الكثيفة</p>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th class="table__header-cell">المنتج</th>
+                <th class="table__header-cell">الفئة</th>
+                <th class="table__header-cell">السعر</th>
+                <th class="table__header-cell">المخزون</th>
+                <th class="table__header-cell">الحالة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table__row">
+                <td class="table__cell">لابتوب Dell XPS 15</td>
+                <td class="table__cell">إلكترونيات</td>
+                <td class="table__cell font-mono text-accent">$1,299</td>
+                <td class="table__cell">45</td>
+                <td class="table__cell">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    متوفر
+                  </span>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">ماوس Logitech MX Master</td>
+                <td class="table__cell">ملحقات</td>
+                <td class="table__cell font-mono text-accent">$99</td>
+                <td class="table__cell">120</td>
+                <td class="table__cell">
+                  <span class="badge badge-approved">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    متوفر
+                  </span>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">شاشة LG UltraWide</td>
+                <td class="table__cell">إلكترونيات</td>
+                <td class="table__cell font-mono text-accent">$799</td>
+                <td class="table__cell">8</td>
+                <td class="table__cell">
+                  <span class="badge badge-pending">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    قليل
+                  </span>
+                </td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__cell">كيبورد Keychron K2</td>
+                <td class="table__cell">ملحقات</td>
+                <td class="table__cell font-mono text-accent">$89</td>
+                <td class="table__cell">0</td>
+                <td class="table__cell">
+                  <span class="badge badge-rejected">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    نفذ
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ Page: Modals ══ -->
+  <div id="page-modals" class="page-section">
+    <div class="page-content">
+
+      <!-- Header -->
+      <div class="page-header">
+        <p class="text-label mb-3">المكونات</p>
+        <h1 class="text-display text-glow-cyan mb-4">النوافذ المنبثقة</h1>
+        <p class="text-body-sm">مكونات تفاعلية متقدمة — Modals، Tabs، Dropdowns — مبنية على نظام التصميم الكامل.</p>
+      </div>
+
+      <!-- Modal Examples -->
+      <div class="demo-section">
+        <p class="demo-section-title">أمثلة النوافذ المنبثقة</p>
+        <p class="text-body-sm mb-6 text-muted">انقر على الأزرار لفتح النوافذ المنبثقة. جميع النوافذ تستخدم <span class="text-accent font-mono">.modal</span> و <span class="text-accent font-mono">.modal-backdrop</span> مع أحجام مختلفة.</p>
+        
+        <div class="grid-auto-fill-md">
+          <!-- Basic Modal -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">نافذة أساسية</span>
+              <span class="demo-card__tag demo-card__tag--primary">modal</span>
+            </div>
+            <div class="demo-card__preview">
+              <button class="btn btn-primary" onclick="openModal('modal-basic')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                فتح النافذة
+              </button>
+            </div>
+          </div>
+
+          <!-- Confirmation Modal -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">نافذة تأكيد</span>
+              <span class="demo-card__tag demo-card__tag--danger">danger</span>
+            </div>
+            <div class="demo-card__preview">
+              <button class="btn btn-danger" onclick="openModal('modal-confirm')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                حذف العنصر
+              </button>
+            </div>
+          </div>
+
+          <!-- Large Modal -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">نافذة كبيرة</span>
+              <span class="demo-card__tag demo-card__tag--info">modal-lg</span>
+            </div>
+            <div class="demo-card__preview">
+              <button class="btn btn-info" onclick="openModal('modal-large')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                عرض التفاصيل
+              </button>
+            </div>
+          </div>
+
+          <!-- Small Modal -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">نافذة صغيرة</span>
+              <span class="demo-card__tag demo-card__tag--success">modal-sm</span>
+            </div>
+            <div class="demo-card__preview">
+              <button class="btn btn-success" onclick="openModal('modal-small')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                تأكيد سريع
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="demo-section">
+        <p class="demo-section-title">التبويبات (Tabs)</p>
+        <p class="text-body-sm mb-6 text-muted">تبويبات تفاعلية مع عداد اختياري. استخدم <span class="text-accent font-mono">.tabs</span> و <span class="text-accent font-mono">.tab</span> مع <span class="text-accent font-mono">.is-active</span>.</p>
+        
+        <div class="card p-6">
+          <div class="tabs mb-6">
+            <div class="tab is-active" onclick="switchTab(this, 'tab-panel-1')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              الملف الشخصي
+            </div>
+            <div class="tab" onclick="switchTab(this, 'tab-panel-2')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+              الإعدادات
+            </div>
+            <div class="tab" onclick="switchTab(this, 'tab-panel-3')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              الرسائل
+              <span class="tab__count">12</span>
+            </div>
+            <div class="tab" onclick="switchTab(this, 'tab-panel-4')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              الإشعارات
+              <span class="tab__count">3</span>
+            </div>
+          </div>
+
+          <div id="tab-panel-1" class="tab-panel is-active">
+            <h3 class="text-heading-3 text-primary font-bold mb-3">الملف الشخصي</h3>
+            <p class="text-body-sm text-secondary mb-4">معلومات الحساب والبيانات الشخصية.</p>
+            <div class="flex gap-3">
+              <button class="btn btn-primary btn-sm">تعديل الملف</button>
+              <button class="btn btn-secondary btn-sm">عرض النشاط</button>
+            </div>
+          </div>
+
+          <div id="tab-panel-2" class="tab-panel">
+            <h3 class="text-heading-3 text-primary font-bold mb-3">الإعدادات</h3>
+            <p class="text-body-sm text-secondary mb-4">إعدادات الحساب والخصوصية والأمان.</p>
+            <div class="flex gap-3">
+              <button class="btn btn-primary btn-sm">حفظ التغييرات</button>
+              <button class="btn btn-secondary btn-sm">إلغاء</button>
+            </div>
+          </div>
+
+          <div id="tab-panel-3" class="tab-panel">
+            <h3 class="text-heading-3 text-primary font-bold mb-3">الرسائل</h3>
+            <p class="text-body-sm text-secondary mb-4">لديك 12 رسالة جديدة في صندوق الوارد.</p>
+            <div class="flex gap-3">
+              <button class="btn btn-primary btn-sm">فتح الرسائل</button>
+              <button class="btn btn-secondary btn-sm">تحديد الكل كمقروء</button>
+            </div>
+          </div>
+
+          <div id="tab-panel-4" class="tab-panel">
+            <h3 class="text-heading-3 text-primary font-bold mb-3">الإشعارات</h3>
+            <p class="text-body-sm text-secondary mb-4">لديك 3 إشعارات جديدة تحتاج إلى مراجعة.</p>
+            <div class="flex gap-3">
+              <button class="btn btn-primary btn-sm">عرض الكل</button>
+              <button class="btn btn-secondary btn-sm">مسح الإشعارات</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdowns -->
+      <div class="demo-section">
+        <p class="demo-section-title">القوائم المنسدلة (Dropdowns)</p>
+        <p class="text-body-sm mb-6 text-muted">قوائم منسدلة تفاعلية مع تأثيرات زجاجية. استخدم <span class="text-accent font-mono">.dropdown</span> و <span class="text-accent font-mono">.dropdown__menu</span>.</p>
+        
+        <div class="grid-auto-fill-md">
+          <!-- User Menu -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">قائمة المستخدم</span>
+              <span class="demo-card__tag demo-card__tag--primary">dropdown</span>
+            </div>
+            <div class="demo-card__preview">
+              <div class="dropdown">
+                <button class="btn btn-secondary" onclick="toggleDropdown(this)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  حسابي
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="dropdown__menu">
+                  <div class="dropdown__item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    الملف الشخصي
+                  </div>
+                  <div class="dropdown__item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+                    الإعدادات
+                  </div>
+                  <div class="dropdown__divider"></div>
+                  <div class="dropdown__item is-danger">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    تسجيل الخروج
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions Menu -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">قائمة الإجراءات</span>
+              <span class="demo-card__tag demo-card__tag--secondary">actions</span>
+            </div>
+            <div class="demo-card__preview">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-icon" onclick="toggleDropdown(this)" data-tooltip="المزيد">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                </button>
+                <div class="dropdown__menu">
+                  <div class="dropdown__item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    عرض
+                  </div>
+                  <div class="dropdown__item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    تعديل
+                  </div>
+                  <div class="dropdown__item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                    نسخ
+                  </div>
+                  <div class="dropdown__divider"></div>
+                  <div class="dropdown__item is-danger">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                    حذف
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- أنواع الإضافة -->
+      <div class="demo-section">
+        <p class="demo-section-title">نماذج الإضافة والتعديل</p>
+        <p class="text-body-sm mb-6 text-muted">نماذج كاملة لإضافة وتعديل البيانات — مستخدمين، متاجر، شركات، ومنتجات.</p>
+        
+        <div class="grid-auto-fill-md">
+          <!-- إضافة مستخدم -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">إضافة مستخدم</span>
+              <span class="demo-card__tag demo-card__tag--primary">user</span>
+            </div>
+            <div class="demo-card__preview demo-card__preview--gap">
+              <button class="btn btn-primary btn-sm" onclick="openModal('modal-add-user')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                إضافة
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="openModal('modal-edit-user')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                تعديل
+              </button>
+            </div>
+          </div>
+
+          <!-- إضافة متجر -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">إضافة متجر/عميل</span>
+              <span class="demo-card__tag demo-card__tag--success">store</span>
+            </div>
+            <div class="demo-card__preview demo-card__preview--gap">
+              <button class="btn btn-success btn-sm" onclick="openModal('modal-add-store')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                إضافة
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="openModal('modal-edit-store')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                تعديل
+              </button>
+            </div>
+          </div>
+
+          <!-- إضافة شركة -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">إضافة شركة</span>
+              <span class="demo-card__tag demo-card__tag--info">company</span>
+            </div>
+            <div class="demo-card__preview demo-card__preview--gap">
+              <button class="btn btn-info btn-sm" onclick="openModal('modal-add-company')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+                إضافة
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="openModal('modal-edit-company')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                تعديل
+              </button>
+            </div>
+          </div>
+
+          <!-- إضافة منتج -->
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">إضافة منتج</span>
+              <span class="demo-card__tag demo-card__tag--warning">product</span>
+            </div>
+            <div class="demo-card__preview demo-card__preview--gap">
+              <button class="btn btn-warning btn-sm" onclick="openModal('modal-add-product')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                إضافة
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="openModal('modal-edit-product')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                تعديل
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Basic -->
+  <div id="modal-basic" class="modal-backdrop" onclick="closeModalBackdrop(event, 'modal-basic')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal__glow"></div>
+      <div class="modal__header">
+        <h3 class="modal__title">نافذة منبثقة أساسية</h3>
+        <button class="modal__close" onclick="closeModal('modal-basic')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="text-body text-secondary mb-4">هذه نافذة منبثقة أساسية مع خلفية زجاجية وتأثيرات توهج. يمكنك إضافة أي محتوى هنا.</p>
+        <p class="text-body-sm text-muted">النوافذ المنبثقة مبنية على نظام التصميم الكامل مع دعم RTL والثيمات المتعددة.</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-basic')">إلغاء</button>
+        <button class="btn btn-primary">تأكيد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Delete -->
+  <div id="modal-confirm" class="modal-backdrop" onclick="closeModalBackdrop(event, 'modal-confirm')">
+    <div class="modal modal-sm" onclick="event.stopPropagation()">
+      <div class="modal__glow"></div>
+      <div class="modal__header">
+        <h3 class="modal__title">تأكيد الحذف</h3>
+        <button class="modal__close" onclick="closeModal('modal-confirm')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="flex items-start gap-4 mb-4">
+          <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-accent-danger/20 to-accent-danger/10 border border-accent-danger/30 flex-shrink-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-danger"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="flex-1">
+            <p class="text-body text-primary font-semibold mb-2">هل أنت متأكد من الحذف؟</p>
+            <p class="text-body-sm text-secondary mb-4">لا يمكن التراجع عن هذا الإجراء. سيتم حذف العنصر نهائياً.</p>
+            <div class="form-group">
+              <label class="form-label">سبب الحذف (اختياري)</label>
+              <textarea class="textarea" rows="3" placeholder="اكتب سبب الحذف للتوثيق..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-confirm')">إلغاء</button>
+        <button class="btn btn-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          حذف نهائي
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Large -->
+  <div id="modal-large" class="modal-backdrop" onclick="closeModalBackdrop(event, 'modal-large')">
+    <div class="modal modal-lg" onclick="event.stopPropagation()">
+      <div class="modal__glow"></div>
+      <div class="modal__header">
+        <h3 class="modal__title">تفاصيل العنصر</h3>
+        <button class="modal__close" onclick="closeModal('modal-large')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="mb-6">
+          <h4 class="text-heading-3 text-primary font-bold mb-3">معلومات أساسية</h4>
+          <p class="text-body text-secondary mb-4">هذه نافذة كبيرة تستخدم <span class="text-accent font-mono">.modal-lg</span> لعرض محتوى أكثر تفصيلاً.</p>
+          <div class="grid-2 gap-4">
+            <div class="card p-4">
+              <p class="text-caption text-muted mb-2">الحالة</p>
+              <span class="badge badge-approved">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                نشط
+              </span>
+            </div>
+            <div class="card p-4">
+              <p class="text-caption text-muted mb-2">التاريخ</p>
+              <p class="text-body-sm text-primary font-semibold">15 نوفمبر 2024</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-heading-3 text-primary font-bold mb-3">الوصف</h4>
+          <p class="text-body-sm text-secondary leading-relaxed">يمكنك إضافة أي محتوى في النوافذ الكبيرة — نصوص، صور، جداول، نماذج، أو أي مكون آخر من نظام التصميم.</p>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-large')">إغلاق</button>
+        <button class="btn btn-primary">حفظ التغييرات</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Small -->
+  <div id="modal-small" class="modal-backdrop" onclick="closeModalBackdrop(event, 'modal-small')">
+    <div class="modal modal-sm" onclick="event.stopPropagation()">
+      <div class="modal__glow"></div>
+      <div class="modal__header">
+        <h3 class="modal__title">تأكيد سريع</h3>
+        <button class="modal__close" onclick="closeModal('modal-small')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-success/20 to-accent-success/10 border border-accent-success/30 flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-accent-success"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <p class="text-body text-primary font-semibold">تم بنجاح!</p>
+        </div>
+        <p class="text-body-sm text-secondary">تم حفظ التغييرات بنجاح.</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-success btn-full" onclick="closeModal('modal-small')">تمام</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ Page: Search & Filters ══ -->
+  <div id="page-search" class="page-section">
+    <div class="page-content">
+
+      <div class="page-header">
+        <p class="text-label mb-3">المكونات</p>
+        <h1 class="text-display text-glow-cyan mb-4">البحث والفلاتر</h1>
+        <p class="text-body-sm">نظام بحث وفلترة متكامل — حقل بحث مع زر مسح وفلاتر منسدلة ومدمجة.</p>
+      </div>
+
+      <!-- Search Field -->
+      <div class="demo-section">
+        <p class="demo-section-title">حقل البحث</p>
+        <div class="grid-auto-fill-md">
+
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">بحث عادي</span>
+              <span class="demo-card__tag demo-card__tag--primary">search-field</span>
+            </div>
+            <div class="demo-card__preview">
+              <div class="search-field" style="max-width:28rem;width:100%;">
+                <svg class="search-field__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-field__input" type="text" placeholder="ابحث في النظام..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="card demo-card">
+            <div class="demo-card__header">
+              <span class="demo-card__label">بحث مع زر مسح</span>
+              <span class="demo-card__tag demo-card__tag--danger">clearable</span>
+            </div>
+            <div class="demo-card__preview">
+              <div class="search-field" style="max-width:28rem;width:100%;position:relative;">
+                <svg class="search-field__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="search-field__input" type="text" value="محمد الخطيب" style="padding-left:2.5rem;" />
+                <button onclick="this.previousElementSibling.value=''" style="position:absolute;left:var(--space-3);top:50%;transform:translateY(-50%);color:var(--text-muted);background:var(--surface-base);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:2px;display:flex;align-items:center;justify-content:center;transition:all var(--transition-fast);" onmouseover="this.style.color='var(--accent-danger)'" onmouseout="this.style.color='var(--text-muted)'">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Filter Chips -->
+      <div class="demo-section">
+        <p class="demo-section-title">فلاتر سريعة (Filter Chips)</p>
+        <div class="card p-6">
+          <div class="filter-bar">
+            <span class="text-caption text-muted font-bold">تصفية:</span>
+            <button class="filter-chip is-active" onclick="toggleChip(this)">الكل</button>
+            <button class="filter-chip" onclick="toggleChip(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              موافق عليه
+            </button>
+            <button class="filter-chip" onclick="toggleChip(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              قيد الانتظار
+            </button>
+            <button class="filter-chip" onclick="toggleChip(this)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              مرفوض
+            </button>
+            <div style="width:1px;height:1.5rem;background:var(--border-subtle);margin:0 var(--space-2);"></div>
+            <button class="filter-chip" onclick="toggleChip(this)">العمليات القانونية</button>
+            <button class="filter-chip" onclick="toggleChip(this)">أمن المعلومات</button>
+            <button class="filter-chip" onclick="toggleChip(this)">هندسة الأنظمة</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown Filter -->
+      <div class="demo-section">
+        <p class="demo-section-title">فلترة منسدلة (Dropdown Filter)</p>
+        <p class="text-body-sm mb-6 text-muted">فلترة تظهر عند الضغط على زر الفلترة مع خيارات متعددة.</p>
+        <div class="card p-6">
+          <div class="flex items-center gap-4 flex-wrap">
+            <!-- Search -->
+            <div class="search-field flex-1" style="min-width:200px;max-width:320px;">
+              <svg class="search-field__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="search-field__input" type="text" placeholder="ابحث..." />
+            </div>
+            <!-- Filter dropdown trigger -->
+            <div class="dropdown" style="position:relative;">
+              <button class="btn btn-secondary" onclick="toggleDropdown(this)" id="filter-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                فلترة
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="dropdown__menu" style="min-width:18rem;">
+                <div style="padding:var(--space-3);display:flex;flex-direction:column;gap:var(--space-4);">
+                  <div class="form-group">
+                    <label class="form-label">الحالة</label>
+                    <div class="select-wrapper">
+                      <select class="select">
+                        <option value="">الكل</option>
+                        <option>موافق عليه</option>
+                        <option>قيد الانتظار</option>
+                        <option>مرفوض</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">القسم</label>
+                    <div class="select-wrapper">
+                      <select class="select">
+                        <option value="">الكل</option>
+                        <option>العمليات القانونية</option>
+                        <option>أمن المعلومات</option>
+                        <option>هندسة الأنظمة</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">من تاريخ</label>
+                    <input class="input" type="date" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">إلى تاريخ</label>
+                    <input class="input" type="date" />
+                  </div>
+                  <div style="display:flex;gap:var(--space-2);padding-top:var(--space-2);border-top:1px solid var(--border-subtle);">
+                    <button class="btn btn-primary" style="flex:1;" onclick="document.getElementById('filter-btn').click()">تطبيق</button>
+                    <button class="btn btn-ghost" style="flex:1;">إعادة تعيين</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inline Filter -->
+      <div class="demo-section">
+        <p class="demo-section-title">فلترة مدمجة (Inline Filter)</p>
+        <p class="text-body-sm mb-6 text-muted">فلترة ظاهرة دائماً داخل الصفحة بدون الحاجة لفتح قائمة.</p>
+        <div class="form-surface">
+          <div style="padding:var(--space-6);">
+            <div class="grid-3 gap-4 mb-4">
+              <div class="form-group">
+                <label class="form-label">مصفوفة المنتج</label>
+                <div class="select-wrapper">
+                  <select class="select">
+                    <option>نيون أوبتكس</option>
+                    <option>كوانتم كورز</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">كود المنطقة</label>
+                <input class="input" type="text" placeholder="مثال: EU-01" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">الحد الأدنى للكمية</label>
+                <input class="input" type="number" placeholder="0" />
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);">
+              <button class="btn btn-primary">تطبيق الفلترة</button>
+              <button class="btn btn-ghost">إعادة تعيين</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /page-search -->
+
+  <!-- ══ Page: Dynamic Forms ══ -->
+  <div id="page-forms" class="page-section">
+    <div class="page-content">
+
+      <div class="page-header">
+        <p class="text-label mb-3">المكونات</p>
+        <h1 class="text-display text-glow-cyan mb-4">النماذج الديناميكية</h1>
+        <p class="text-body-sm">نظام صفوف ديناميكي — إضافة وحذف الصفوف بشكل تفاعلي مع حد أدنى لعدد الصفوف.</p>
+      </div>
+
+      <!-- Dynamic Row Input -->
+      <div class="demo-section">
+        <p class="demo-section-title">نظام الصفوف الديناميكية</p>
+        <p class="text-body-sm mb-6 text-muted">نموذج بند المشتريات — أضف بنوداً بحد أدنى 2 صفوف.</p>
+        <div class="form-surface" id="dynamic-form-1">
+          <div style="padding:var(--space-6);">
+            <div id="rows-container-1" style="display:flex;flex-direction:column;gap:var(--space-3);"></div>
+            <button class="form-row-add mt-4" onclick="addRow('rows-container-1', ['اسم البند','الكمية','السعر (ر.س)'], 2)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة بند
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Row — More Columns -->
+      <div class="demo-section">
+        <p class="demo-section-title">نموذج بأعمدة أكثر</p>
+        <p class="text-body-sm mb-6 text-muted">نموذج بيانات الموظفين — بحد أدنى 3 صفوف.</p>
+        <div class="form-surface" id="dynamic-form-2">
+          <div style="padding:var(--space-6);">
+            <div id="rows-container-2" style="display:flex;flex-direction:column;gap:var(--space-3);"></div>
+            <button class="form-row-add mt-4" onclick="addRow('rows-container-2', ['الاسم الكامل','القسم','الراتب','تاريخ التعيين'], 3)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              إضافة موظف
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Inputs Showcase -->
+      <div class="demo-section">
+        <p class="demo-section-title">عناصر النماذج</p>
+        <div class="form-surface">
+          <div style="padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-5);">
+            <div class="grid-2 gap-4">
+              <div class="form-group">
+                <label class="form-label">حقل نصي</label>
+                <input class="input" type="text" placeholder="أدخل النص..." />
+              </div>
+              <div class="form-group">
+                <label class="form-label">حقل بخطأ</label>
+                <input class="input is-error" type="text" value="قيمة خاطئة" />
+                <span class="form-error">هذا الحقل مطلوب</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label">تاريخ</label>
+                <input class="input" type="date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">رقم</label>
+                <input class="input" type="number" placeholder="0" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">قائمة منسدلة</label>
+              <div class="select-wrapper">
+                <select class="select">
+                  <option value="">اختر خياراً</option>
+                  <option>العمليات القانونية</option>
+                  <option>أمن المعلومات</option>
+                  <option>هندسة الأنظمة</option>
+                  <option>الموارد البشرية</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ملاحظات</label>
+              <textarea class="textarea" rows="3" placeholder="أدخل ملاحظاتك..."></textarea>
+            </div>
+            <div style="display:flex;gap:var(--space-3);justify-content:flex-end;">
+              <button class="btn btn-ghost">إلغاء</button>
+              <button class="btn btn-primary">حفظ البيانات</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /page-forms -->
+
   </div><!-- /demo-page -->
 
   <script>
@@ -1817,9 +2943,9 @@
       document.getElementById('oc-backdrop').classList.remove('is-open');
     }
     const pageLabels = {
-      colors: 'الألوان', typography: 'الطباعة', spacing: 'المسافات والمقاييس',
-      effects: 'التأثيرات والظلال', buttons: 'الايكون و الازرار', cards: 'البطاقات',
-      forms: 'النماذج', tables: 'الجداول', navigation: 'التنقل', modals: 'النوافذ المنبثقة'
+      themes: 'الثيمات', colors: 'الألوان', typography: 'الطباعة', spacing: 'المسافات والمقاييس',
+      effects: 'التأثيرات والظلال', buttons: 'الايكون و الازرار', search: 'البحث والفلاتر', cards: 'البطاقات',
+      forms: 'النماذج الديناميكية', tables: 'الجداول', navigation: 'التنقل', modals: 'النوافذ المنبثقة'
     };
     function navigate(page, el) {
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('is-active'));
@@ -1835,13 +2961,9 @@
       const cardsView = document.getElementById('cards-view');
       const buttons = button.parentElement.querySelectorAll('.view-toggle__btn');
       
-      // Remove active class from all buttons
       buttons.forEach(btn => btn.classList.remove('is-active'));
-      
-      // Add active class to clicked button
       button.classList.add('is-active');
       
-      // Toggle views
       if (viewType === 'table') {
         tableView.style.display = 'block';
         cardsView.style.display = 'none';
@@ -1850,6 +2972,136 @@
         cardsView.style.display = 'grid';
       }
     }
+
+    // Modal functions
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeModalBackdrop(event, id) {
+      if (event.target.classList.contains('modal-backdrop')) {
+        closeModal(id);
+      }
+    }
+
+    // Tab functions
+    function switchTab(tabElement, panelId) {
+      const tabsContainer = tabElement.parentElement;
+      tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('is-active'));
+      tabElement.classList.add('is-active');
+      
+      const panelsContainer = tabsContainer.nextElementSibling;
+      const allPanels = panelsContainer.parentElement.querySelectorAll('.tab-panel');
+      allPanels.forEach(p => p.classList.remove('is-active'));
+      
+      const targetPanel = document.getElementById(panelId);
+      if (targetPanel) {
+        targetPanel.classList.add('is-active');
+      }
+    }
+
+    // Dropdown functions
+    let currentDropdown = null;
+
+    function toggleDropdown(button) {
+      const dropdown = button.parentElement;
+      const menu = dropdown.querySelector('.dropdown__menu');
+      
+      if (currentDropdown && currentDropdown !== menu) {
+        currentDropdown.style.display = 'none';
+      }
+      
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+        currentDropdown = null;
+      } else {
+        menu.style.display = 'block';
+        currentDropdown = menu;
+      }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      if (currentDropdown && !event.target.closest('.dropdown')) {
+        currentDropdown.style.display = 'none';
+        currentDropdown = null;
+      }
+    });
+
+    // Filter chip toggle
+    function toggleChip(el) {
+      el.classList.toggle('is-active');
+    }
+
+    // Dynamic row system
+    const rowCounts = {};
+    function addRow(containerId, labels, minRows) {
+      const container = document.getElementById(containerId);
+      if (!rowCounts[containerId]) {
+        rowCounts[containerId] = 0;
+        // init with minRows
+        for (let i = 0; i < minRows; i++) _insertRow(container, containerId, labels);
+        return;
+      }
+      _insertRow(container, containerId, labels);
+    }
+    function _insertRow(container, containerId, labels) {
+      rowCounts[containerId] = (rowCounts[containerId] || 0) + 1;
+      const idx = rowCounts[containerId];
+      const row = document.createElement('div');
+      row.className = 'form-row';
+      row.id = containerId + '-row-' + idx;
+      const cols = labels.length;
+      row.style.gridTemplateColumns = `repeat(${cols}, 1fr) auto`;
+      let inputs = labels.map(label => `
+        <div class="form-group">
+          <label class="form-label">${label}</label>
+          <input class="input" type="text" placeholder="${label}..." />
+        </div>`).join('');
+      inputs += `
+        <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
+          <button class="form-row-delete" onclick="deleteRow('${containerId}', '${containerId}-row-${idx}', ${JSON.stringify(labels)}, ${JSON.stringify(labels).replace(/"/g,"'")})"
+            ${rowCounts[containerId] <= 1 ? 'disabled' : ''}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            حذف
+          </button>
+        </div>`;
+      row.innerHTML = inputs;
+      container.appendChild(row);
+      updateDeleteBtns(containerId);
+    }
+    function deleteRow(containerId, rowId, labels) {
+      const container = document.getElementById(containerId);
+      if (container.children.length <= 1) return;
+      document.getElementById(rowId)?.remove();
+      updateDeleteBtns(containerId);
+    }
+    function updateDeleteBtns(containerId) {
+      const container = document.getElementById(containerId);
+      const btns = container.querySelectorAll('.form-row-delete');
+      btns.forEach(btn => btn.disabled = container.children.length <= 1);
+    }
+
+    // Init dynamic forms on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.modal-backdrop').forEach(m => m.style.display = 'none');
+      document.querySelectorAll('.dropdown__menu').forEach(m => m.style.display = 'none');
+      // init dynamic forms
+      addRow('rows-container-1', ['اسم البند','الكمية','السعر (ر.س)'], 2);
+      addRow('rows-container-2', ['الاسم الكامل','القسم','الراتب','تاريخ التعيين'], 3);
+    });
   </script>
 
 </body>
